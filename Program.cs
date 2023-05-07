@@ -1,7 +1,19 @@
+using MiChamba.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// 2. Conexion a sql server
+const string CONNECTION_NAME = "devConnection";
+
+// Obtener la cadena de conexion del appsetting
+var connectionString = builder.Configuration.GetConnectionString(CONNECTION_NAME);
+
+// Agregar contexto
+builder.Services.AddDbContext<MiChambaDbContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
