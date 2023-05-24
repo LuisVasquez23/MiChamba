@@ -85,6 +85,11 @@ namespace MiChamba.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("EMAIL");
 
+                    b.Property<string>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IMAGEN");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -197,6 +202,11 @@ namespace MiChamba.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("EMAIL");
+
+                    b.Property<string>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IMAGEN");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

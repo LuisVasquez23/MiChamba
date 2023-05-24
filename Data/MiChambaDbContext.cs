@@ -27,26 +27,6 @@ namespace MiChamba.Data
             .HasOne(o => o.Empresa)
             .WithMany(e => e.Ofertas)
             .HasForeignKey(o => o.IdEmpresa);
-
-            modelBuilder.Entity<Postulacion>()
-                .HasOne(p => p.Oferta)
-                .WithMany(o => o.Postulaciones)
-                .HasForeignKey(p => p.IdOferta);
-
-            modelBuilder.Entity<Postulacion>()
-                .HasOne(p => p.Usuario)
-                .WithMany(u => u.Postulaciones)
-                .HasForeignKey(p => p.IdUsuario);
-
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(c => c.Empresa)
-                .WithMany(e => e.Calificaciones)
-                .HasForeignKey(c => c.IdEmpresa);
-
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(c => c.Usuario)
-                .WithMany(u => u.Calificaciones)
-                .HasForeignKey(c => c.IdUsuario);
         }
 
     }

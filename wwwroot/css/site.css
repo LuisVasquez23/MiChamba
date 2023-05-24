@@ -15,4 +15,138 @@ html {
 
 body {
   margin-bottom: 60px;
+  scroll-behavior:smooth;
+}
+
+.navbar {
+    transition: background-color 0.3s ease; /* transición suave para cambios de color de fondo */
+}
+
+.bg-dark {
+    background: #394867 !important;
+}
+
+
+
+.navbar-dark *{
+    color:white !important;
+}
+
+.btn-login{
+    background:#29c23d;
+}
+
+#home-section {
+    width: 100%;
+    height: 100%;
+    min-height: 90vh;
+    max-height: 90vh;
+    background: linear-gradient(to bottom, #40404080, #4040409c), url('../img/home-bg.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.home-section {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#buscarInput {
+    max-width: 750px;
+    border-radius: 10px 0px 0px 10px;
+    opacity:0.5;
+}
+
+#btn_buscar {
+    border-radius: 0px 10px 10px 0px;
+}
+
+.logo {
+    position: fixed;
+    top: 15px;
+    width: 80px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 10px 5px #40404080;
+}
+
+.login-form {
+    padding: 20px;
+    background: white;
+    min-width: 350px !important;
+    box-shadow: 5px 8px 10px 10px #40404080;
+    border-radius: 10px;
+    color: #394867;
+    font-weight:bold;
+}
+
+#login-container{
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+/**
+    ======================
+    DISEÑO DE LAS CARDS
+    ======================
+*/
+
+.ultimas-ofertas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content:center;
+}
+
+.card-oferta {
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+    min-height: 280px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 13px 2px rgba(126, 126, 126, 0.362);
+    overflow: hidden;
+    transition: all .5s;
+    display: grid;
+    grid-template-rows: auto fit-content() auto;
+    grid-template-areas:
+        "titulo titulo"
+        "descripcion descripcion"
+        "info footer";
+}
+
+.card-oferta:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 13px 2px rgba(55, 107, 239, 0.362);
+}
+
+.card-oferta-title {
+    padding: 10px;
+    background: #d0d0d0;
+    color: rgb(63, 63, 63);
+    font-weight: bold;
+    grid-area: titulo;
+}
+
+.card-oferta-description {
+    padding: 10px;
+    text-align: justify;
+    font-size: 0.9rem;
+    color: rgb(97, 97, 97);
+    font-weight: lighter;
+    grid-area:descripcion;
+}
+
+.card-oferta-moreinfo {
+    padding: 10px;
+    grid-area:info;
+}
+
+.card-oferta-link {
+    padding: 10px;
+    grid-area:footer;
 }

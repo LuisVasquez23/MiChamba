@@ -1,8 +1,127 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using MiChamba.ViewModel;
+
+@{
+    ViewData["Title"] = "Trabajemos juntos";
+
+    List<OfertaViewModel> ofertas = ViewBag.ofertas;
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home-section" id="home-section">
+    <div class="container d-flex justify-content-center ">
+        <form action="" class="d-flex justify-content-center w-100">
+            <input type="text" class="form-control fs-4 border-0" placeholder="Encuentra tu trabajo..." id="buscarInput" />
+            <input type="submit" value="Buscar" class="btn btn-login fs-4 text-white" id="btn_buscar" />
+        </form>
+    </div>
+</div>
+
+<div class="bg-dark p-4">
+
+    <!-- INICIO ULTIMAS OFERTAS -->
+    <div class="container-fluid bg-white p-5 rounded mb-5 " id="ofertas-section">
+        
+        <h3 class="h2 mt-5">ÚLTIMAS OFERTAS PUBLICADAS</h3>
+
+        <div class="container d-flex align-items-center">
+            <div class="ultimas-ofertas mt-5">
+                @{
+                    foreach (OfertaViewModel oferta in ofertas)
+                    {
+                        <div class="card-oferta">
+                            <div class="card-oferta-title bg-dark text-white">
+                                @oferta.Titulo
+                            </div>
+                            <div class="card-oferta-description">
+                                @oferta.Descripcion
+                            </div>
+                            <div class="card-oferta-moreinfo">
+                                <span class="text-muted">
+                                    <small> @oferta.FechaPublicada</small>
+                                </span>
+                            </div>
+                            <div class="card-oferta-link text-end">
+                                <a href="" class="btn bg-dark text-white">Ver oferta</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <!-- FIN ULTIMAS OFERTAS -->
+        
+    </div>
+
+    <!-- INICIO -- NOSOTROS -->
+    <div class="container bg-dark text-white mb-5 mt-5 pt-5" id="nosotros-section">
+        <h3 class="h1 mt-5">NOSOTROS</h3>
+        <hr />
+        <div class="row">
+            <div class="col-lg-6 fs-4">
+                <p style="text-align:justify;">
+                    ¡Bienvenido a nuestra aplicación web de búsqueda de trabajo! Aquí en <span class="fw-bold text-warning">Mi Chamba</span>, 
+                    estamos comprometidos en ayudarte a encontrar el empleo de tus sueños de una manera rápida y eficiente.
+
+                    <br />
+
+                    Nuestra plataforma está diseñada pensando en ti, 
+                    brindándote todas las herramientas necesarias para que puedas explorar oportunidades laborales en diversas industrias y sectores. 
+                    Ya sea que estés buscando tu primer empleo, cambiando de carrera o simplemente deseas mejorar tu situación laboral actual,
+                    estamos aquí para acompañarte en cada paso del camino.
+
+                </p>
+            </div>
+
+            <div class="col-lg-6 text-center">
+                <img src="~/img/logo-png.jpeg" class="img-fluid w-75 rounded-3" />
+            </div>
+        </div>
+    </div>
+    <!-- FIN -- NOSOTROS -->
+
+    <!-- INICIO RECURSOS -->
+    <div class="container-fluid bg-white p-5 rounded mb-5" id="recursos-section">
+        <h3 class="h1 text-end mt-4">RECURSOS</h3>
+
+        <div class="container d-flex flex-wrap gap-4 mb-3 p-3 justify-content-center">
+            <div class="card p-3" style="width: 18rem;">
+                <img src="~/img/Udemy_logo.svg.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Udemy</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+
+            <div class="card p-3" style="width: 18rem;">
+                <img src="~/img/Udemy_logo.svg.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Udemy</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+
+            <div class="card p-3" style="width: 18rem;">
+                <img src="~/img/Udemy_logo.svg.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Udemy</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <!-- FIN RECURSOS -->
+
+    </div>
+
 </div>

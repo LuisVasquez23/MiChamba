@@ -21,6 +21,9 @@ namespace MiChamba.Models
         [Column("EMAIL")]
         public string Email { get; set; }
 
+        [Column("IMAGEN")]
+        public string Imagen { get; set; }
+
         [Column("PASSWORD")]
         public string Password { get; set; }
 

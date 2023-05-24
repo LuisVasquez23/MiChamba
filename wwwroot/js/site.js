@@ -1,4 +1,20 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿window.addEventListener('scroll', function () {
+    changeNavbarBackground();
+});
 
-// Write your JavaScript code.
+window.addEventListener('DOMContentLoaded', function () {
+    changeNavbarBackground();
+});
+
+const changeNavbarBackground = () => {
+    let navbar = document.getElementById('navbar');
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > 0) {
+        // Cuando se hace scroll hacia abajo
+        navbar.style.background = '#3C486B';
+    } else {
+        // Cuando está en la parte superior
+        navbar.style.background = 'rgba(60, 72, 107, 0.70)';
+    }
+}
