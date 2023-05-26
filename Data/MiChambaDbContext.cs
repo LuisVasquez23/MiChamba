@@ -18,7 +18,7 @@ namespace MiChamba.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Postulacion> Postulaciones { get; set; }
         public DbSet<Calificacion> Calificaciones { get; set; }
-
+        public DbSet<Recurso> Recursos { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -14,6 +14,8 @@ namespace MiChamba.Controllers
             _db = db;
         }
 
+
+        // VISTAS
         public IActionResult Index()
         {
             ViewBag.ofertas = ListarOfertas();
@@ -26,7 +28,16 @@ namespace MiChamba.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Oferta(int idOferta)
+        {
+            ViewBag.oferta = ObtenerOferta(idOferta);
+
+            return View();
+        }
+
         // HELPERS
+        #region LISTAR OFERTAS
         public List<OfertaViewModel> ListarOfertas()
         {
             List<OfertaViewModel> ListaOfertas = _db.Ofertas
@@ -44,7 +55,31 @@ namespace MiChamba.Controllers
 
             return ListaOfertas;
         }
+        #endregion
 
+        #region BUSCAR OFERTA
+        public OfertaViewModel ObtenerOferta(int idOfertaP)
+        {
+            OfertaViewModel? ofertaObtenida = _db.Ofertas
+                                        .Include(o => o.Empresa)
+                                        .OrderByDescending(i => i.FechaPublicacion)
+                                        .Take(6)
+                                        .Select(o => new OfertaViewModel
+                                        {
+                                            IdOferta = o.IdOferta,
+                                            Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                            Descripcion = o.Descripcion.PadRight(10),
+                                            FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
+                                            Ciudad = o.Ubicacion
+                                        })
+                                        .Where( o => o.IdOferta == idOfertaP)
+                                        .FirstOrDefault() ?? new OfertaViewModel();
+
+            return ofertaObtenida;
+        }
+        #endregion
+
+        #region OBTENER EL TIEMPO DE  PUBLICACION
         public static string ObtenerTiempoPublicacion(DateTime fechaPublicacion)
         {
             TimeSpan tiempoTranscurrido = DateTime.Now - fechaPublicacion;
@@ -64,10 +99,10 @@ namespace MiChamba.Controllers
             else
             {
                 int mesesTranscurridos = (int)(tiempoTranscurrido.TotalDays / 30);
-                return $"Hace {mesesTranscurridos:N0} meses";
+                return (mesesTranscurridos <= 1) ? $"Hace {mesesTranscurridos:N0} mes" : $"Hace {mesesTranscurridos:N0} meses";
             }
         }
-
+        #endregion
 
     }
 }
