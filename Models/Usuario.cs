@@ -13,13 +13,19 @@ namespace MiChamba.Models
 
         [Column("NOMBRE")]
         [Required(ErrorMessage = "El nombre del usuario es requerido.")]
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
 
         [Column("APELLIDO")]
-        public string Apellido { get; set; }
+        public string? Apellido { get; set; }
 
         [Column("EMAIL")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
+
+        [Column("PAIS")]
+        public string? Pais { get; set; }
+
+        [Column("ESTADO")]
+        public string? Estado { get; set; }
 
         [Column("IMAGEN")]
         public string Imagen { get; set; }

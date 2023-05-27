@@ -6,8 +6,8 @@
     <div class="container w-75 d-flex justify-content-center align-items-center">
         <form method="post" action="" id="registro-form" class="login-form w-75">
             <h2>Registro</h2>
+            <hr />
             <div class="row">
-
                 <!-- Nombres -->
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
@@ -21,6 +21,15 @@
                     <fieldset class="mt-md-2">
                         <label for="apellidos">Apellidos: </label>
                         <input type="text" class="form-control" name="apellidos" id="apellidos" />
+                    </fieldset>
+                </div>
+
+                <!-- Pais -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="pais">Pais: </label>
+                        <select id="pais" name="pais" class="form-control">
+                        </select>
                     </fieldset>
                 </div>
 
@@ -63,6 +72,13 @@
                     <fieldset class="mt-md-2">
                         <label for="foto_perfil">Foto: </label>
                         <input type="file" class="form-control" name="foto_perfil" id="foto_perfil" />
+                    </fieldset>
+                </div>
+
+                <!-- Btn Registro -->
+                <div class="col-md-6 offset-6 mt-2">
+                    <fieldset class="mt-md-2">
+                        <input type="submit" class="btn btn-login text-white w-100" name="Registrar"  />
                     </fieldset>
                 </div>
             </div>
