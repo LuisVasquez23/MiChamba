@@ -1,9 +1,11 @@
 ﻿@using MiChamba.ViewModel;
+@using MiChamba.Models;
 
 @{
     ViewData["Title"] = "Trabajemos juntos";
 
     List<OfertaViewModel> ofertas = ViewBag.ofertas;
+    List<Recurso> recursos = ViewBag.recursos;
 
 }
 
@@ -84,41 +86,23 @@
         <h3 class="h1 text-end mt-4">RECURSOS</h3>
 
         <div class="container d-flex flex-wrap gap-4 mb-3 p-3 justify-content-center">
-            <div class="card p-3" style="width: 18rem;">
-                <img src="~/img/Udemy_logo.svg.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Udemy</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
+          
+            @{
+                foreach (Recurso recurso in recursos)
+                {
+                     <div class="card p-3 shadow" style="width: 18rem;">
+                        <img src="@recurso.Imagen" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@recurso.Titulo</h5>
+                            <p class="card-text">@recurso.Descripcion</p>
+                        </div>
+                        <div class="card-body">
+                            <a href="@recurso.Url" class="card-link" target="_blank">Visitar</a>
+                        </div>
+                    </div>
+                }
+            }
 
-            <div class="card p-3" style="width: 18rem;">
-                <img src="~/img/Udemy_logo.svg.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Udemy</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-
-            <div class="card p-3" style="width: 18rem;">
-                <img src="~/img/Udemy_logo.svg.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Udemy</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
         </div>
         <!-- FIN RECURSOS -->
 

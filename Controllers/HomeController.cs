@@ -19,6 +19,8 @@ namespace MiChamba.Controllers
         public IActionResult Index()
         {
             ViewBag.ofertas = ListarOfertas();
+            ViewBag.recursos = ListarRecursos();
+
 
             return View();
         }
@@ -56,7 +58,7 @@ namespace MiChamba.Controllers
             return ListaOfertas;
         }
         #endregion
-
+     
         #region BUSCAR OFERTA
         public OfertaViewModel ObtenerOferta(int idOfertaP)
         {
@@ -76,6 +78,17 @@ namespace MiChamba.Controllers
                                         .FirstOrDefault() ?? new OfertaViewModel();
 
             return ofertaObtenida;
+        }
+        #endregion
+
+        #region LISTAR RECURSOS
+        public List<Recurso> ListarRecursos()
+        {
+            List<Recurso> listadoRecursos = _db.Recursos.DefaultIfEmpty().ToList()
+                                            ?? Enumerable.Empty<Recurso>().ToList();
+
+
+            return listadoRecursos;
         }
         #endregion
 
