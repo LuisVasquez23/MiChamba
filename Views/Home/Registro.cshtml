@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<div class="bg-dark p-4 w-100 h-100 position-absolute bg-white" id="login-container">
+    <div class="container w-75 d-flex justify-content-center align-items-center">
+        <form method="post" action="" id="registro-form" class="login-form w-75">
+            <h2>Registro</h2>
+            <div class="row">
+
+                <!-- Nombres -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="nombres">Nombres: </label>
+                        <input type="text" class="form-control" name="nombres" id="nombres" />
+                    </fieldset>
+                </div>
+
+                <!-- Apellidos -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="apellidos">Apellidos: </label>
+                        <input type="text" class="form-control" name="apellidos" id="apellidos" />
+                    </fieldset>
+                </div>
+
+                <!-- Departamento -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="departamento">Departamento: </label>
+                        <select id="departamento" name="departamento" class="form-control">
+
+                        </select>
+                    </fieldset>
+                </div>
+
+                <!-- Correo -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="email">Correo: </label>
+                        <input type="email" class="form-control" name="email" id="email" />
+                    </fieldset>
+                </div>
+
+                <!-- Password -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="password">Password: </label>
+                        <input type="password" class="form-control" name="password" id="password" />
+                    </fieldset>
+                </div>
+
+                <!-- Telefono -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="telefono">Telefono: </label>
+                        <input type="text" class="form-control" name="telefono" id="telefono" />
+                    </fieldset>
+                </div>
+
+                 <!-- Foto de perfil -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="foto_perfil">Foto: </label>
+                        <input type="file" class="form-control" name="foto_perfil" id="foto_perfil" />
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

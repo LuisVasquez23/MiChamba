@@ -16,6 +16,7 @@ namespace MiChamba.Controllers
 
 
         // VISTAS
+        #region INDEX - GET
         public IActionResult Index()
         {
             ViewBag.ofertas = ListarOfertas();
@@ -24,12 +25,22 @@ namespace MiChamba.Controllers
 
             return View();
         }
+        #endregion
 
+        #region LOGIN - GET
         public IActionResult Login()
         {
             return View();
         }
+        #endregion
 
+        #region REGISTRO - INDEX
+        public IActionResult Registro() {     
+            return View(); 
+        }
+        #endregion
+
+        #region OFERTA - GET
         [HttpGet]
         public IActionResult Oferta(int idOferta)
         {
@@ -37,6 +48,7 @@ namespace MiChamba.Controllers
 
             return View();
         }
+        #endregion
 
         // HELPERS
         #region LISTAR OFERTAS

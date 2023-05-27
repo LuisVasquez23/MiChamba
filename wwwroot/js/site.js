@@ -1,4 +1,7 @@
-﻿window.addEventListener('scroll', function () {
+﻿// DECLARACION DE VARIABLES
+let $departamentosSelect = document.getElementById('registro-form');
+
+window.addEventListener('scroll', function () {
     changeNavbarBackground();
 });
 
@@ -17,4 +20,12 @@ const changeNavbarBackground = () => {
         // Cuando está en la parte superior
         navbar.style.background = 'rgba(60, 72, 107, 0.70)';
     }
+}
+
+if ($departamentosSelect != null) {
+    
+}
+
+const Ajax = () => {
+    
 }
