@@ -3,6 +3,8 @@ using MiChamba.Models;
 using MiChamba.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
 namespace MiChamba.Controllers
@@ -27,19 +29,6 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-        #region LOGIN - GET
-        public IActionResult Login()
-        {
-            return View();
-        }
-        #endregion
-
-        #region REGISTRO - INDEX
-        public IActionResult Registro() {     
-            return View(); 
-        }
-        #endregion
-
         #region OFERTA - GET
         [HttpGet]
         public IActionResult Oferta(int idOferta)
@@ -52,6 +41,7 @@ namespace MiChamba.Controllers
         }
         #endregion
 
+        #region OFERTA - POST
         [HttpPost]
         public IActionResult Oferta(IFormCollection form)
         {
@@ -61,6 +51,7 @@ namespace MiChamba.Controllers
 
             return View();
         }
+        #endregion
 
         // HELPERS
         #region LISTAR OFERTAS
@@ -75,7 +66,8 @@ namespace MiChamba.Controllers
                                             IdOferta = o.IdOferta,
                                             Titulo = o.Titulo + " - " + o.Empresa.Nombre,
                                             Descripcion = o.Descripcion.PadRight(10),
-                                            FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion)
+                                            FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
+                                            Requisitos = JObject.Parse(o.Requisitos)
                                         })
                                         .DefaultIfEmpty().ToList();
 
@@ -83,27 +75,40 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-
+        #region BUSCAR OFERTA
         public List<OfertaViewModel> BuscarOferta(string valor)
         {
-            List<OfertaViewModel> ofertaObtenida = (from oferta in _db.Ofertas
-                                                    join empresa in _db.Empresas on oferta.IdEmpresa equals empresa.IdEmpresa
-                                                    orderby oferta.FechaPublicacion descending
-                                                    select new OfertaViewModel
-                                                    {
-                                                        IdOferta = oferta.IdOferta,
-                                                        Titulo = oferta.Titulo + " - " + empresa.Nombre,
-                                                        Descripcion = oferta.Descripcion.PadRight(10),
-                                                        FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
-                                                        Ciudad = oferta.Ubicacion
-                                                    })
+            List<OfertaViewModel> ofertaObtenida = new List<OfertaViewModel>();
+
+            try
+            {
+
+                ofertaObtenida = (from oferta in _db.Ofertas
+                                                        join empresa in _db.Empresas on oferta.IdEmpresa equals empresa.IdEmpresa
+                                                        orderby oferta.FechaPublicacion descending
+                                                        select new OfertaViewModel
+                                                        {
+                                                            IdOferta = oferta.IdOferta,
+                                                            Titulo = oferta.Titulo + " - " + empresa.Nombre,
+                                                            Descripcion = oferta.Descripcion.PadRight(10),
+                                                            FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
+                                                            Ciudad = oferta.Ubicacion,
+                                                            Requisitos = JObject.Parse(oferta.Requisitos)
+                                                        })
                 .Take(6)
                 .Where(o => o.Titulo.Contains(valor))
                 .DefaultIfEmpty()
                 .ToList();
 
+            }
+            catch(Exception error)
+            {
+                ofertaObtenida = Enumerable.Empty<OfertaViewModel>().ToList();   
+            }
+
             return ofertaObtenida;
         }
+        #endregion
 
         #region BUSCAR OFERTA
         public OfertaViewModel ObtenerOferta(int idOfertaP)
@@ -118,7 +123,8 @@ namespace MiChamba.Controllers
                                             Titulo = o.Titulo + " - " + o.Empresa.Nombre,
                                             Descripcion = o.Descripcion.PadRight(10),
                                             FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
-                                            Ciudad = o.Ubicacion
+                                            Ciudad = o.Ubicacion,
+                                            Requisitos = JObject.Parse(o.Requisitos)
                                         })
                                         .Where( o => o.IdOferta == idOfertaP)
                                         .FirstOrDefault() ?? new OfertaViewModel();
