@@ -11,9 +11,9 @@
 
 <div class="home-section" id="home-section">
     <div class="container d-flex justify-content-center ">
-        <form action="" class="d-flex justify-content-center w-100">
-            <input type="text" class="form-control fs-4 border-0" placeholder="Encuentra tu trabajo..." id="buscarInput" />
-            <input type="submit" value="Buscar" class="btn btn-login fs-4 text-white" id="btn_buscar" />
+        <form asp-controller="Home" asp-action="Oferta" method="post" class="d-flex justify-content-center w-100">
+            <input type="text" class="form-control fs-4 border-0" placeholder="Encuentra tu trabajo..." id="buscarInput" name="ofertaSearch" />
+            <input type="submit" value="Buscar" class="btn btn-login fs-4 text-white" id="btn_buscar" name="btnOferta" />
         </form>
     </div>
 </div>

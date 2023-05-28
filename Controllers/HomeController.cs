@@ -43,12 +43,24 @@ namespace MiChamba.Controllers
         #region OFERTA - GET
         [HttpGet]
         public IActionResult Oferta(int idOferta)
-        {
+        {  
+            //ViewBag.buscar = BuscarOferta();
+
             ViewBag.oferta = ObtenerOferta(idOferta);
 
             return View();
         }
         #endregion
+
+        [HttpPost]
+        public IActionResult Oferta(IFormCollection form)
+        {
+            string valorBuscar = form["ofertaSearch"].ToString();
+
+            ViewBag.ofertasBuscadas = BuscarOferta(valorBuscar) ?? Enumerable.Empty<OfertaViewModel>();
+
+            return View();
+        }
 
         // HELPERS
         #region LISTAR OFERTAS
@@ -70,7 +82,29 @@ namespace MiChamba.Controllers
             return ListaOfertas;
         }
         #endregion
-     
+
+
+        public List<OfertaViewModel> BuscarOferta(string valor)
+        {
+            List<OfertaViewModel> ofertaObtenida = (from oferta in _db.Ofertas
+                                                    join empresa in _db.Empresas on oferta.IdEmpresa equals empresa.IdEmpresa
+                                                    orderby oferta.FechaPublicacion descending
+                                                    select new OfertaViewModel
+                                                    {
+                                                        IdOferta = oferta.IdOferta,
+                                                        Titulo = oferta.Titulo + " - " + empresa.Nombre,
+                                                        Descripcion = oferta.Descripcion.PadRight(10),
+                                                        FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
+                                                        Ciudad = oferta.Ubicacion
+                                                    })
+                .Take(6)
+                .Where(o => o.Titulo.Contains(valor))
+                .DefaultIfEmpty()
+                .ToList();
+
+            return ofertaObtenida;
+        }
+
         #region BUSCAR OFERTA
         public OfertaViewModel ObtenerOferta(int idOfertaP)
         {
