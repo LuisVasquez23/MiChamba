@@ -37,7 +37,7 @@ namespace MiChamba.Models
         public string Telefono { get; set; }
 
         public virtual ICollection<Oferta> Ofertas { get; set; }
-        public ICollection<Calificacion> Calificaciones { get; set; }
+        public virtual ICollection<Calificacion> Calificaciones { get; set; }
 
 
     }

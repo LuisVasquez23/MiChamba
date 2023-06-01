@@ -7,6 +7,12 @@ namespace MiChamba.Models
     public class Usuario
     {
 
+        public Usuario() {
+            Postulaciones = new List<Postulacion>();
+            Curriculums = new List<Curriculum>();
+            Calificaciones = new List<Calificacion>();
+        }
+
         [Key]
         [Column("ID_USUARIO")]
         public int IdUsuario { get; set; }
@@ -37,8 +43,9 @@ namespace MiChamba.Models
         [RegularExpression(@"^\d{4}-\d{4}$", ErrorMessage = "El formato del teléfono no es válido.")]
         public string Telefono { get; set; }
 
-        public ICollection<Postulacion> Postulaciones { get; set; }
-        public ICollection<Calificacion> Calificaciones { get; set; }
+        public virtual ICollection<Postulacion> Postulaciones { get; set; }
+        public virtual ICollection<Calificacion> Calificaciones { get; set; }
+        public virtual ICollection<Curriculum> Curriculums { get; set; }
 
     }
 }

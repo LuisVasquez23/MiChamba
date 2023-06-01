@@ -34,8 +34,9 @@ namespace MiChamba.Models
 
 
         [Column("ID_EMPRESA")]
-        [ForeignKey("id_empresa")]
         public int IdEmpresa { get; set; }
+
+        [ForeignKey("IdEmpresa")]
         public virtual Empresa Empresa { get; set; }
 
         public virtual ICollection<Postulacion> Postulaciones { get; set; }

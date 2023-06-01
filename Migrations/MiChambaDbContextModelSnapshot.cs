@@ -36,9 +36,6 @@ namespace MiChamba.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("COMENTARIO");
 
-                    b.Property<int>("EmpresaIdEmpresa")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaCalificacion")
                         .HasColumnType("datetime")
                         .HasColumnName("FECHA_CALIFICACION");
@@ -51,20 +48,42 @@ namespace MiChamba.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_USUARIO");
 
-                    b.Property<int>("UsuarioIdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int>("calificacion")
+                    b.Property<int>("ValorCalificacion")
                         .HasColumnType("int")
                         .HasColumnName("CALIFICACION");
 
                     b.HasKey("IdCalificacion");
 
-                    b.HasIndex("EmpresaIdEmpresa");
+                    b.HasIndex("IdEmpresa");
 
-                    b.HasIndex("UsuarioIdUsuario");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("CALIFICACION");
+                });
+
+            modelBuilder.Entity("MiChamba.Models.Curriculum", b =>
+                {
+                    b.Property<int>("IdCurriculum")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID_CURRICULUM");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCurriculum"));
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_USUARIO");
+
+                    b.Property<string>("NombreArchivo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NOMBRE_ARCHIVO");
+
+                    b.HasKey("IdCurriculum");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("CURRICULUM");
                 });
 
             modelBuilder.Entity("MiChamba.Models.Empresa", b =>
@@ -181,17 +200,11 @@ namespace MiChamba.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_USUARIO");
 
-                    b.Property<int>("OfertaIdOferta")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsuarioIdUsuario")
-                        .HasColumnType("int");
-
                     b.HasKey("IdPostulacion");
 
-                    b.HasIndex("OfertaIdOferta");
+                    b.HasIndex("IdOferta");
 
-                    b.HasIndex("UsuarioIdUsuario");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("POSTULACION");
                 });
@@ -284,17 +297,28 @@ namespace MiChamba.Migrations
                 {
                     b.HasOne("MiChamba.Models.Empresa", "Empresa")
                         .WithMany("Calificaciones")
-                        .HasForeignKey("EmpresaIdEmpresa")
+                        .HasForeignKey("IdEmpresa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiChamba.Models.Usuario", "Usuario")
                         .WithMany("Calificaciones")
-                        .HasForeignKey("UsuarioIdUsuario")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Empresa");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("MiChamba.Models.Curriculum", b =>
+                {
+                    b.HasOne("MiChamba.Models.Usuario", "Usuario")
+                        .WithMany("Curriculums")
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -314,13 +338,13 @@ namespace MiChamba.Migrations
                 {
                     b.HasOne("MiChamba.Models.Oferta", "Oferta")
                         .WithMany("Postulaciones")
-                        .HasForeignKey("OfertaIdOferta")
+                        .HasForeignKey("IdOferta")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiChamba.Models.Usuario", "Usuario")
                         .WithMany("Postulaciones")
-                        .HasForeignKey("UsuarioIdUsuario")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -344,6 +368,8 @@ namespace MiChamba.Migrations
             modelBuilder.Entity("MiChamba.Models.Usuario", b =>
                 {
                     b.Navigation("Calificaciones");
+
+                    b.Navigation("Curriculums");
 
                     b.Navigation("Postulaciones");
                 });

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Trabajemos juntos";
 
     List<OfertaViewModel> ofertas = ViewBag.ofertas;
-    List<Recurso> recursos = ViewBag.recursos;
+    List<Recurso> recursos = ViewBag.recursos ?? Enumerable.Empty<Recurso>();
 
 }
 
@@ -90,16 +90,19 @@
             @{
                 foreach (Recurso recurso in recursos)
                 {
-                     <div class="card p-3 shadow" style="width: 18rem;">
-                        <img src="@recurso.Imagen" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@recurso.Titulo</h5>
-                            <p class="card-text">@recurso.Descripcion</p>
+                    if (recurso != null)
+                    {
+                        <div class="card p-3 shadow" style="width: 18rem;">
+                            <img src="~/uploads/img/@recurso.Imagen" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@recurso.Titulo</h5>
+                                <p class="card-text">@recurso.Descripcion</p>
+                            </div>
+                            <div class="card-body">
+                                <a href="@recurso.Url" class="card-link" target="_blank">Visitar</a>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <a href="@recurso.Url" class="card-link" target="_blank">Visitar</a>
-                        </div>
-                    </div>
+                    }       
                 }
             }
 

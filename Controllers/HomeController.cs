@@ -86,23 +86,32 @@ namespace MiChamba.Controllers
 
         public List<OfertaViewModel> BuscarOferta(string valor)
         {
-            List<OfertaViewModel> ofertaObtenida = (from oferta in _db.Ofertas
-                                                    join empresa in _db.Empresas on oferta.IdEmpresa equals empresa.IdEmpresa
-                                                    orderby oferta.FechaPublicacion descending
-                                                    select new OfertaViewModel
-                                                    {
-                                                        IdOferta = oferta.IdOferta,
-                                                        Titulo = oferta.Titulo + " - " + empresa.Nombre,
-                                                        Descripcion = oferta.Descripcion.PadRight(10),
-                                                        FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
-                                                        Ciudad = oferta.Ubicacion
-                                                    })
-                .Take(6)
-                .Where(o => o.Titulo.Contains(valor))
-                .DefaultIfEmpty()
-                .ToList();
+            try
+            {
+                List<OfertaViewModel> ofertaObtenida = (from oferta in _db.Ofertas
+                                                        join empresa in _db.Empresas on oferta.IdEmpresa equals empresa.IdEmpresa
+                                                        orderby oferta.FechaPublicacion descending
+                                                        select new OfertaViewModel
+                                                        {
+                                                            IdOferta = oferta.IdOferta,
+                                                            Titulo = oferta.Titulo + " - " + empresa.Nombre,
+                                                            Descripcion = oferta.Descripcion.PadRight(10),
+                                                            FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
+                                                            Ciudad = oferta.Ubicacion
+                                                        })
+               .Take(6)
+               .Where(o => o.Titulo.Contains(valor))
+               .DefaultIfEmpty()
+               .ToList();
 
-            return ofertaObtenida;
+                return ofertaObtenida;
+            }
+            catch(Exception e)
+            {
+                return new List<OfertaViewModel>();
+            }
+
+            
         }
 
         #region BUSCAR OFERTA

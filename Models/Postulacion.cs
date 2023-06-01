@@ -12,14 +12,17 @@ namespace MiChamba.Models
 
         // LLaves foraneas
         [Column("ID_OFERTA")]
-        [ForeignKey("ID_OFERTA")]
         public int IdOferta { get; set; }
-        public Oferta Oferta { get; set; }
+
+        [ForeignKey("IdOferta")]
+        public virtual Oferta Oferta { get; set; }
 
         [Column("ID_USUARIO")]
-        [ForeignKey("ID_USUARIO")]
+       
         public int IdUsuario { get; set; }
-        public Usuario Usuario { get; set; }
+
+        [ForeignKey("IdUsuario")]
+        public virtual Usuario Usuario { get; set; }
 
 
         [Column("FECHA_POSTULACION", TypeName = "datetime")]
