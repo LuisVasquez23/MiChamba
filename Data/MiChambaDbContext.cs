@@ -21,12 +21,14 @@ namespace MiChamba.Data
         public DbSet<Recurso> Recursos { get; set; }
 
 
+
+        //LLaves foraneas
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Oferta>()
-            .HasOne(o => o.Empresa)
-            .WithMany(e => e.Ofertas)
-            .HasForeignKey(o => o.IdEmpresa);
+            modelBuilder.Entity<Oferta>() 
+            .HasOne(o => o.Empresa) //1
+            .WithMany(e => e.Ofertas) //*
+            .HasForeignKey(o => o.IdEmpresa); //id
         }
 
     }

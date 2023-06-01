@@ -71,6 +71,8 @@ namespace MiChamba.Controllers
         }
         #endregion
      
+
+
         #region BUSCAR OFERTA
         public OfertaViewModel ObtenerOferta(int idOfertaP)
         {
