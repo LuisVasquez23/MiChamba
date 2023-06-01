@@ -10,6 +10,13 @@ namespace MiChamba.Controllers
             _db = db;
         }
 
+        #region INDEX - GET
+        public IActionResult Index()
+        {
+            return View();
+        }
+        #endregion
+
         #region REGISTRO - GET
         public IActionResult Registro()
         {

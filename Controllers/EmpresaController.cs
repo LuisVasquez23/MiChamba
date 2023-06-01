@@ -2,7 +2,7 @@
 
 namespace MiChamba.Controllers
 {
-    public class PProfesionalController : Controller
+    public class EmpresaController : Controller
     {
         public IActionResult Index()
         {
