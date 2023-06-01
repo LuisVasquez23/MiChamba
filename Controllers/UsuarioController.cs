@@ -10,8 +10,8 @@ namespace MiChamba.Controllers
             _db = db;
         }
 
-        #region PERFIL - USUARIO
-        public IActionResult perfilUsuario()
+        #region INDEX - GET
+        public IActionResult Index()
         {
             return View();
         }
