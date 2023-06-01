@@ -1,11 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Registrarse";
 }
-                <!-- Inicio Registro -->
+<!-- Inicio Registro -->
 
 <div class="bg-dark p-4 w-100 h-100 position-absolute bg-white" id="login-container">
     <div class="container w-75 d-flex justify-content-center align-items-center">
-        <form method="post" action="" id="registro-form" class="login-form w-75">
+        <form asp-controller="Usuario" asp-action="Registrar" method="post" id="registro-form" class="login-form w-75">
             <h2>Registro</h2>
             <hr />
             <div class="row">
@@ -39,7 +39,7 @@
                     <fieldset class="mt-md-2">
                         <label for="departamento">Departamento: </label>
                         <select id="departamento" name="departamento" class="form-control">
-
+                            <option>Selecciona un departamento...</option>
                         </select>
                     </fieldset>
                 </div>
@@ -68,7 +68,7 @@
                     </fieldset>
                 </div>
 
-                 <!-- Foto de perfil -->
+                <!-- Foto de perfil -->
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
                         <label for="foto_perfil">Foto: </label>
@@ -77,12 +77,17 @@
                 </div>
 
                 <!-- Btn Registro -->
-                <div class="col-md-6 offset-6 mt-2">
+                <div class="col-md-6 offset-md-6 mt-2">
                     <fieldset class="mt-md-2">
-                        <input type="submit" class="btn btn-login text-white w-100" name="Registrar"  />
+                        <input type="submit" class="btn btn-login text-white w-100" name="Registrar" value="Registrarse" />
                     </fieldset>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/Ajax.js"></script>
+    <script src="~/js/Registro.js"></script>
+}

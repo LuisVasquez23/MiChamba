@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow fixed-top" id="navbar">
             <div class="container">
-                <a class="navbar-brand position-relative d-none d-md-block" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand position-relative d-none d-md-block" asp-controller="Home" asp-action="Index">
                     <img src="~/img/logo-png.jpeg" class="img-fluid logo d-none d-md-block" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,7 +35,7 @@
                             <a class="nav-link" href="/#recursos-section">Recursos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-login" asp-area="" asp-controller="Home" asp-action="Login">Iniciar Sesion</a>
+                            <a class="nav-link btn btn-login" asp-controller="Usuario" asp-action="Login">Iniciar Sesion</a>
                         </li>
                     </ul>
                 </div>
@@ -46,7 +46,7 @@
         @RenderBody()
     </main>
 
-    <footer class="border-top footer text-muted bg-dark fixed-bottom">
+    <footer class="border-top footer text-muted bg-dark">
         <div class="container text-white">
             &copy; 2023 - MiChamba 
         </div>

@@ -1,4 +1,7 @@
-﻿namespace MiChamba.ViewModel
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace MiChamba.ViewModel
 {
     public class OfertaViewModel
     {
@@ -7,6 +10,7 @@
         public String? Ciudad { get; set; }
         public String? Descripcion { get; set; }
         public String? FechaPublicada { get; set; }
+        public JObject? Requisitos { get; set; }
 
     }
 }
