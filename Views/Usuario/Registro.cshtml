@@ -1,35 +1,39 @@
-﻿@{
+﻿@using MiChamba.Models
+@model MiChamba.Models.Usuario
+
+@{
     ViewData["Title"] = "Registrarse";
 }
 <!-- Inicio Registro -->
 
 <div class="bg-dark p-4 w-100 h-100 position-absolute bg-white" id="login-container">
     <div class="container w-75 d-flex justify-content-center align-items-center">
-        <form asp-controller="Usuario" asp-action="Registrar" method="post" id="registro-form" class="login-form w-75">
+        <form asp-controller="Usuario" asp-action="Registro" enctype="multipart/form-data" method="post" id="registro-form" class="login-form w-75">
             <h2>Registro</h2>
             <hr />
             <div class="row">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <!-- Nombres -->
-                <div class="col-md-6">
-                    <fieldset class="mt-md-2">
-                        <label for="nombres">Nombres: </label>
-                        <input type="text" class="form-control" name="nombres" id="nombres" />
-                    </fieldset>
+                <div class="col-md-6 mt-md-2">
+                    <label for="nombres" asp-for="Nombre">Nombres: </label>
+                    <input type="text" asp-for="Nombre" class="form-control" name="Nombre" id="nombres" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
                 </div>
 
                 <!-- Apellidos -->
-                <div class="col-md-6">
-                    <fieldset class="mt-md-2">
-                        <label for="apellidos">Apellidos: </label>
-                        <input type="text" class="form-control" name="apellidos" id="apellidos" />
-                    </fieldset>
+                <div class="col-md-6 mt-md-2">
+                    <label for="apellidos" asp-for="Apellido">Apellidos: </label>
+                    <input type="text" asp-for="Apellido" class="form-control" name="Apellido" id="apellidos" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
                 </div>
 
                 <!-- Pais -->
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
                         <label for="pais">Pais: </label>
-                        <select id="pais" name="pais" class="form-control">
+                        <select id="pais" name="Pais" class="form-control">
                         </select>
                     </fieldset>
                 </div>
@@ -38,7 +42,7 @@
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
                         <label for="departamento">Departamento: </label>
-                        <select id="departamento" name="departamento" class="form-control">
+                        <select id="departamento" name="Estado" class="form-control">
                             <option>Selecciona un departamento...</option>
                         </select>
                     </fieldset>
@@ -47,24 +51,27 @@
                 <!-- Correo -->
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
-                        <label for="email">Correo: </label>
-                        <input type="email" class="form-control" name="email" id="email" />
+                        <label for="email" asp-for="Email">Correo: </label>
+                        <input type="email" class="form-control" asp-for="Email" name="Email" id="email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </fieldset>
                 </div>
 
                 <!-- Password -->
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
-                        <label for="password">Password: </label>
-                        <input type="password" class="form-control" name="password" id="password" />
+                        <label for="password" asp-for="Password">Password: </label>
+                        <input type="password" asp-for="Password" class="form-control" name="Password" id="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </fieldset>
                 </div>
 
                 <!-- Telefono -->
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
-                        <label for="telefono">Telefono: </label>
-                        <input type="text" class="form-control" name="telefono" id="telefono" />
+                        <label for="telefono" asp-for="Telefono">Telefono: </label>
+                        <input type="text" asp-for="Telefono" class="form-control" name="Telefono" id="telefono" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
                     </fieldset>
                 </div>
 
@@ -72,7 +79,7 @@
                 <div class="col-md-6">
                     <fieldset class="mt-md-2">
                         <label for="foto_perfil">Foto: </label>
-                        <input type="file" class="form-control" name="foto_perfil" id="foto_perfil" />
+                        <input type="file" class="form-control" name="ImagenFile" id="foto_perfil" />
                     </fieldset>
                 </div>
 

@@ -33,7 +33,6 @@ namespace MiChamba.Controllers
         [HttpGet]
         public IActionResult Oferta(int idOferta)
         {  
-            //ViewBag.buscar = BuscarOferta();
 
             ViewBag.oferta = ObtenerOferta(idOferta);
 

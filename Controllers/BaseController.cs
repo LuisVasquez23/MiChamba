@@ -11,6 +11,19 @@ namespace MiChamba.Controllers
         protected ILogger<T>? Logger => _logger ?? (_logger = HttpContext.RequestServices.GetService<ILogger<T>>());
         protected MiChambaDbContext? _db;
 
+        public bool VerifyUserLogin()
+        {
+            var idUsuario = HttpContext.Session.GetString("id_usuario") ?? "";
+
+            if (idUsuario == "")
+            {
+                return false;
+            }
+
+            TempData["nombre_usuario"] = HttpContext.Session.GetString("nombre_usuario");
+
+            return true;
+        }
 
     }
 }
