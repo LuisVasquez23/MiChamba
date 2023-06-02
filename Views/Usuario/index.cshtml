@@ -1,82 +1,33 @@
-﻿@using MiChamba.ViewModel;
-@using MiChamba.Models;
-
-@{
-    ViewData["Title"] = "Perfil Profesional";
+﻿@{
+    Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
 }
 
-<div class="bg-dark p-4 mt-5" id="perfil-section">
+<div class="container">
+    <form asp-action="Ofertas" class="mb-4">
+        <div class="form-group">
+            <fieldset class="d-flex gap-2">
+                <input type="text" class="form-control" placeholder="Buscar empleo" />
+                <input type="submit" class="btn btn-success" value="Buscar" />
+            </fieldset>
+        </div>
+    </form>
 
-    <div class="container">
+    <div class="bg-dark p-4 rounded">
         <div class="row">
-            <div class="col-lg-12">
-                <h3 class="text-white mx-5 px-5">Mi perfil profecional</h3>
-                <div class="d-flex justify-content-center ">
-                    <div id="content-height">
-                        <div class="row d-flex p-4  justify-content-center mx-3 mt-2">
-
-                            <div class="col-lg-4 col-md-4 col-sm-4 border border-dark rounded-4" id="imagePerfil">
-                                <div class="text-center p-2">
-                                    <img src="~/img/imageperfil.png" class="imgperfil" alt="">
-                                    <h5 class="pt-2">Paolo Navarro</h5>
-                                </div>
-                            </div>
-
-                            <div class="col pt-3">
-                                <div class="row d-flex">
-                                    <div class="col-6">
-                                        <p class="text-end">Editar cuenta</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-primary form-control" id="btnform">Editar</button>
-                                    </div>
-                                </div>
-                                <div class="row d-flex mt-2">
-                                    <div class="col-6">
-                                        <p class="text-end">Subir CV</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-primary form-control" id="btnform">Editar</button>
-                                    </div>
-                                </div>
-                                <div class="row d-flex mt-2">
-                                    <div class="col-6">
-                                        <p class="text-end">Eliminar cuenta</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-primary form-control" id="btnform">Editar</button>
-                                    </div>
-                                </div>
-                                <div class="row d-flex mt-2">
-                                    <div class="col-6">
-                                        <p class="text-end">Agregar Preferencias</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-primary form-control" id="btnform">Editar</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 row d-flex">
-                            <h3 class="mx-4 mb-4">Estadisticas</h3>
-                            <div class="col-lg-6 col-md-6 col-sm-6 text-center">
-                                <h5>Visualizacion del perfil</h5>
-                                <img src="~/img/eye.svg" alt="" id=imgEstadistica>
-                                <h4>4</h4>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 text-center">
-                                <h5>Mensajes recibidos</h5>
-                                <img src="~/img/chat-left-dots.svg" id=imgEstadistica class="mt-1" alt="">
-                                <h4>4</h4>
-                            </div>
-                        </div>
+            <div class="col-md-4">
+                <div class="card mb-3 w-100">
+                    <div class="card-header">
+                        Postulaciones
                     </div>
-
+                    <div class="card-body">
+                        <p class="card-text">
+                            <h1 class="text-center text-muted display-1">10</h1>
+                        </p>
+                    </div>
                 </div>
             </div>
+
+            
         </div>
     </div>
-
 </div>

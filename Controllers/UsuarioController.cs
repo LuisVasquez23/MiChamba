@@ -10,6 +10,8 @@ namespace MiChamba.Controllers
             _db = db;
         }
 
+        // VISTAS
+
         #region INDEX - GET
         public IActionResult Index()
         {
@@ -30,5 +32,13 @@ namespace MiChamba.Controllers
             return View();
         }
         #endregion
+
+        public IActionResult Ofertas() {
+            return View();
+        }
+
+        public IActionResult Ajustes() {
+            return View();
+        }
     }
 }
