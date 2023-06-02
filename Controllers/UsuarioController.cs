@@ -1,17 +1,6 @@
 ﻿using MiChamba.Data;
 using MiChamba.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.Extensions.Hosting;
-
 
 namespace MiChamba.Controllers
 {
@@ -178,6 +167,10 @@ namespace MiChamba.Controllers
         #endregion
 
 
+        public IActionResult ModificacionPerfil()
+        {
+            return View();
+        }
 
     }
 }
