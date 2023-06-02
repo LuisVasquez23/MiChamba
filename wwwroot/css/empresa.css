@@ -1,16 +1,19 @@
-﻿.content-ofert {
-    margin-top: 40px;
-    padding: 30px;
+﻿
+.content-ofert {
     border-radius: 10px;
-    margin-bottom: 100px;
+    padding: 30px;
+
 }
+
+.content-ofert .titulo {
+    color: black;
+}
+
 
 .text-infort {
-    color: white;
-    margin-top:70px;
-    margin-left: 50px;
+    color: black;
 }
 
-.contform {
-    justify-content: center;
+input {
+    color: white;
 }

@@ -1,19 +1,20 @@
-﻿<link rel="stylesheet" href="~/css/empresa.css"/>
+﻿@{
+    Layout = "~/Views/Shared/_EmpresaLayout.cshtml";
+}
 
-<div class="bg-dark p-5 position-absolute w-100 h-100">
+<link rel="stylesheet" href="~/css/empresa.css"/>
+
+<div class="container-fluid">
     <div class="text-infort">
-        <h1 class="text-infort">Información de trabajo</h1>
+        <h1>Información de trabajo</h1>
     </div>
     <div class="bg-light container content-ofert">
-        <div class="row">
-            <div class="form-group col-sm-12 mb-3">
+        <form method="post" action="">
+            <div class="form-group titulo col-sm-12 mb-3">
                 <label for="tituloTrabajo" class="form-label">Titulo del trabajo</label>
                 <input type="email" class="form-control" id="tituloTrabajo">
             </div>
-        </div>
 
-
-        <form method="post" action="">
             <div class="form-group col-sm-12 mb-3">
                 <label for="educacion" class="form-label">Educación</label>
                 <input type="text" class="form-control" id="educacion" name="Educacion" required>
