@@ -8,5 +8,10 @@ namespace MiChamba.Controllers
         {
             return View();
         }
+
+       public IActionResult AgregarEmpresa()
+        {
+            return View();
+        }
     }
 }
