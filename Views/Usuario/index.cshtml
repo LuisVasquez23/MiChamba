@@ -2,4 +2,32 @@
     Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
 }
 
-<h2>Cargando desde el index</h2>
+<div class="container">
+    <form asp-action="Ofertas" class="mb-4">
+        <div class="form-group">
+            <fieldset class="d-flex gap-2">
+                <input type="text" class="form-control" placeholder="Buscar empleo" />
+                <input type="submit" class="btn btn-success" value="Buscar" />
+            </fieldset>
+        </div>
+    </form>
+
+    <div class="bg-dark p-4 rounded">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3 w-100">
+                    <div class="card-header">
+                        Postulaciones
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <h1 class="text-center text-muted display-1">10</h1>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
