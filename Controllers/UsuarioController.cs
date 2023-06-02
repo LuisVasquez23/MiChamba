@@ -169,6 +169,8 @@ namespace MiChamba.Controllers
 
         public IActionResult ModificacionPerfil()
         {
+
+            ViewBag.foto = HttpContext.Session.GetString("foto");
             return View();
         }
 

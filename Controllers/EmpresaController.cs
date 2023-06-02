@@ -9,7 +9,7 @@ namespace MiChamba.Controllers
             return View();
         }
 
-       public IActionResult AgregarEmpresa()
+       public IActionResult AdministrarPostulaciones()
         {
             return View();
         }

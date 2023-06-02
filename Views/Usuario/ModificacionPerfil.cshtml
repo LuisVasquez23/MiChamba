@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-
+    Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
 
 }
 
@@ -10,57 +10,57 @@
 <style>
 
     #content-height2 {
-        width: 500px;
-        height: 520px;
+        width: 100%;
+        max-width: 500px;
+        height: 100%;
+        min-height: 520px;
         background-color: #212A3E;
         border-radius: 15px;
-        margin: 70px;
+        padding-bottom:10px;
+    }
 
-       
+    .form-control{
+        background: #fff !important;
     }
 
 </style>
-<div class="bg-dark p-4">
+<div class="container mt-5 pt-1" style="display:flex; justify-content:center;">
+    <div id="content-height2">
+        <div class="row col-lg-12">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="targetPerfil">
+                    <h2 class="text-white text-center pt-5">Modificacion de perfil</h2>
 
-    <div class="container" style="display:flex; justify-content:center;">
-        
-        <div id="content-height2">
-            <div class="row col-lg-12">
-                <div class="d-flex justify-content-center align-items-center">
-                    <div class="targetPerfil">
-                        <h2 class="text-white text-center pt-5">Modificacion de perfil</h2>
-
-                        <div class="inputbox mt-4">
-                            <label for="" class="text-white">Nombre: </label>
-                            <input type="text" class="form-control mt-1" placeholder="Nombre">
-                        </div>
-
-                        <div class="inputbox mt-4">
-                            <label for="" class="text-white">Apellido: </label>
-                            <input type="text" class="form-control mt-1" placeholder="Apellido">
-                        </div>
-
-                        <div class="inputbox mt-4">
-                            <label for="" class="text-white">Correo electronico: </label>
-                            <input type="text" class="form-control mt-1" placeholder="Correo">
-                        </div>
-
-                        <div class="inputbox mt-4">
-                            <label for="" class="text-white">Contraseña: </label>
-                            <input type="password" class="form-control mt-1" placeholder="*****">
-                        </div>
-
-                        <div class="text-center mt-3">
-                            <button class="btn btn-primary"> Modificar</button>
-                        </div>
+                    <div class="inputbox mt-4">
+                        <label for="" class="text-white">Nombre: </label>
+                        <input type="text" class="form-control mt-1" placeholder="Nombre">
                     </div>
 
+                    <div class="inputbox mt-4">
+                        <label for="" class="text-white">Apellido: </label>
+                        <input type="text" class="form-control mt-1" placeholder="Apellido">
+                    </div>
+
+                    <div class="inputbox mt-4">
+                        <label for="" class="text-white">Correo electronico: </label>
+                        <input type="text" class="form-control mt-1" placeholder="Correo">
+                    </div>
+
+                    <div class="inputbox mt-4">
+                        <label for="" class="text-white">Contraseña: </label>
+                        <input type="password" class="form-control mt-1" placeholder="*****">
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary"> Modificar</button>
+                    </div>
                 </div>
 
             </div>
+
         </div>
-
-
-
     </div>
+
+
+
 </div>
