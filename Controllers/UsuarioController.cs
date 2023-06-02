@@ -40,5 +40,12 @@ namespace MiChamba.Controllers
         public IActionResult Ajustes() {
             return View();
         }
+
+        public IActionResult ModificacionPerfil()
+        {
+            return View();
+        }
+
+
     }
 }
