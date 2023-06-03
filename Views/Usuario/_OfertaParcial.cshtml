@@ -1,0 +1,35 @@
+﻿@model MiChamba.ViewModel.OfertaViewModel
+
+<h2 class="text-center text-muted">@Model.Titulo</h2>
+<ul class="list-unstyled">
+    <li class="text-muted"> @Model.Ciudad  - @Model.FechaPublicada</li>
+    <li>
+        <hr />
+    </li>
+    <li style="text-align:justify">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="text-dark">Descripción:</h3>
+                @Model.Descripcion
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-dark">Requerimientos:</h3>
+                <p>
+                    <span class="fw-bold">Experiencia:</span>
+                    @Model.Requisitos["experiencia"]
+                </p>
+                <p>
+                    <span class="fw-bold">Educación:</span>
+                    @Model.Requisitos["educacion"]
+                </p>
+                <span class="fw-bold">Habilidades:</span>
+                <ul>
+                    @foreach (var habilidad in Model.Requisitos["habilidades"])
+                    {
+                        <li>@habilidad</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </li>
+</ul>

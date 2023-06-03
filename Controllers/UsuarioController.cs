@@ -1,6 +1,9 @@
 ﻿using MiChamba.Data;
 using MiChamba.Models;
+using MiChamba.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace MiChamba.Controllers
 {
@@ -53,7 +56,7 @@ namespace MiChamba.Controllers
             if (usuario.ImagenFile != null && usuario.ImagenFile.Length > 0)
             {
 
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" ,"uploads","img");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "img");
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(usuario.ImagenFile.FileName);
                 var filePath = Path.Combine(uploadsFolder, fileName);
 
@@ -78,7 +81,7 @@ namespace MiChamba.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            if (VerifyUserLogin()){
+            if (VerifyUserLogin()) {
                 return RedirectToAction("Index");
             }
 
@@ -120,7 +123,7 @@ namespace MiChamba.Controllers
             TempData["nombre_usuario"] = usuarioGuardado.Nombre;
             ViewBag.foto = usuarioGuardado.Imagen;
 
-            return RedirectToAction("Index" , "Usuario");
+            return RedirectToAction("Index", "Usuario");
         }
         #endregion
 
@@ -136,19 +139,26 @@ namespace MiChamba.Controllers
 
             HttpContext.Session.Remove("id_usuario");
 
-            return RedirectToAction("Index" , "Home");
+            return RedirectToAction("Index", "Home");
         }
         #endregion
 
-        #region OFERTAS - GET
-        public IActionResult Ofertas() {
+        #region OFERTAS - POST
+        [HttpPost]
+        public IActionResult Ofertas(IFormCollection formBusqueda) {
 
             if (!VerifyUserLogin())
             {
                 return RedirectToAction("Index");
             }
 
+            string valorBuscado = formBusqueda["empleoBuscar"].ToString();
+
             ViewBag.foto = HttpContext.Session.GetString("foto");
+            ViewBag.ofertaBuscada = valorBuscado;
+            ViewBag.ofertas = BuscarOfertas(valorBuscado);
+
+
             return View();
         }
         #endregion
@@ -166,13 +176,96 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-
+        #region METODIFICACION PERFIL - GET
         public IActionResult ModificacionPerfil()
         {
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
             return View();
         }
+        #endregion
 
+        #region OFERTA - DINAMICA 
+        public ActionResult Oferta(int idOferta)
+        {
+            // Lógica para obtener el contenido dinámico actualizado
+            OfertaViewModel oferta = BuscarOferta(idOferta);
+
+            // Devuelve la vista parcial actualizada
+            return PartialView("_OfertaParcial", oferta);
+        }
+        #endregion
+
+        // HELPERS
+        #region BUSCAR OFERTAS - LISTAR 
+        public List<OfertaViewModel> BuscarOfertas(string valorBuscar)
+        {
+            List<OfertaViewModel> ofertasEncontradas = (from oferta in _db.Ofertas
+                                                        where oferta.Titulo.ToLower().Contains(valorBuscar)
+                                                        select new OfertaViewModel
+                                                        {
+                                                            IdOferta = oferta.IdOferta,
+                                                            Titulo = oferta.Titulo + " - " + oferta.Empresa.Nombre,
+                                                            Descripcion = oferta.Descripcion.PadRight(10),
+                                                            FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
+                                                            Requisitos = JObject.Parse(oferta.Requisitos)
+                                                        }
+                                      ).ToList();
+
+            return ofertasEncontradas;
+        }
+        #endregion
+
+        #region  BUSCAR OFERTA INDIVIDUAL
+        [HttpGet]
+        public OfertaViewModel BuscarOferta(int idOferta){
+                
+            
+                OfertaViewModel? ofertaObtenida = _db.Ofertas
+                                            .Include(o => o.Empresa)
+                                            .OrderByDescending(i => i.FechaPublicacion)
+                                            .Take(6)
+                                            .Select(o => new OfertaViewModel
+                                            {
+                                                IdOferta = o.IdOferta,
+                                                Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                                Descripcion = o.Descripcion.PadRight(10),
+                                                FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
+                                                Ciudad = o.Ubicacion,
+                                                Requisitos = JObject.Parse(o.Requisitos)
+                                            })
+                                            .Where(o => o.IdOferta == idOferta)
+                                            .FirstOrDefault() ?? new OfertaViewModel();
+
+                return ofertaObtenida;
+        }
+        #endregion
+
+        #region OBTENER EL TIEMPO DE  PUBLICACION
+        public static string ObtenerTiempoPublicacion(DateTime fechaPublicacion)
+        {
+            TimeSpan tiempoTranscurrido = DateTime.Now - fechaPublicacion;
+
+            if (tiempoTranscurrido.TotalMinutes < 60)
+            {
+                return $"Hace {tiempoTranscurrido.TotalMinutes:N0} minutos";
+            }
+            else if (tiempoTranscurrido.TotalHours < 24)
+            {
+                return $"Hace {tiempoTranscurrido.TotalHours:N0} horas";
+            }
+            else if (tiempoTranscurrido.TotalDays < 30)
+            {
+                return $"Hace {tiempoTranscurrido.TotalDays:N0} días";
+            }
+            else
+            {
+                int mesesTranscurridos = (int)(tiempoTranscurrido.TotalDays / 30);
+                return (mesesTranscurridos <= 1) ? $"Hace {mesesTranscurridos:N0} mes" : $"Hace {mesesTranscurridos:N0} meses";
+            }
+        }
+        #endregion
+
+        
     }
 }

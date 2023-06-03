@@ -3,10 +3,10 @@
 }
 
 <div class="container">
-    <form asp-action="Ofertas" class="mb-4">
+    <form asp-action="Ofertas" method="post" class="mb-4">
         <div class="form-group">
             <fieldset class="d-flex gap-2">
-                <input type="text" class="form-control" placeholder="Buscar empleo" />
+                <input type="text" class="form-control" name="empleoBuscar" placeholder="Buscar empleo" required />
                 <input type="submit" class="btn btn-success" value="Buscar" />
             </fieldset>
         </div>
