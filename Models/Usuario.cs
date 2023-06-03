@@ -9,7 +9,6 @@ namespace MiChamba.Models
 
         public Usuario() {
             Postulaciones = new List<Postulacion>();
-            Curriculums = new List<Curriculum>();
             Calificaciones = new List<Calificacion>();
         }
 
@@ -51,7 +50,6 @@ namespace MiChamba.Models
 
         public virtual ICollection<Postulacion> Postulaciones { get; set; }
         public virtual ICollection<Calificacion> Calificaciones { get; set; }
-        public virtual ICollection<Curriculum> Curriculums { get; set; }
 
     }
 }

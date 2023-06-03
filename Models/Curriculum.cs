@@ -7,10 +7,6 @@ namespace MiChamba.Models
     public class Curriculum
     {
 
-        public Curriculum() {
-            Usuario= new Usuario();
-        }
-
         [Key]
         [Column("ID_CURRICULUM")]
         public int IdCurriculum { get; set; }
@@ -21,10 +17,11 @@ namespace MiChamba.Models
 
         [Required]
         [Column("NOMBRE_ARCHIVO")]
-        public string NombreArchivo { get; set; }
+        public string? NombreArchivo { get; set; }
 
-        [ForeignKey("IdUsuario")]
-        public virtual Usuario Usuario { get; set; }
+
+        [NotMapped]
+        public IFormFile PdfFile { get; set; }
 
     }
 }
