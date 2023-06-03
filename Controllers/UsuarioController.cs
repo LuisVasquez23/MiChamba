@@ -174,39 +174,72 @@ namespace MiChamba.Controllers
 
             int id = int.Parse(HttpContext.Session.GetString("id_usuario"));
 
-            var Usuario = (from usuario in _db.Usuarios
-                           where usuario.IdUsuario == id
-                           select new
-                           {
-                               usuario.IdUsuario,
-                               usuario.Nombre,
-                               usuario.Apellido,
-                               usuario.Email,
-                               usuario.Password,
-                               usuario.Estado,
-                               usuario.Pais,
-                               usuario.Telefono,
-                               usuario.Imagen
+            Usuario usuario = _db.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
 
-                           }).FirstOrDefault();
-
-            ViewBag.datosUsuario = Usuario;
-
-
-            var nombre = Request.Form["Nombre"];
-            var apellido = Request.Form["Apellido"];
-            var email = Request.Form["Email"];
-            var password = Request.Form["Password"];
-
-
-
+            ViewBag.Vpais = usuario.Pais;
+            ViewBag.Vestado = usuario.Estado;
 
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
-            return View();
+
+            return View(usuario);
         }
 
 
+        #region REGISTRO - POST
+        [HttpPost]
+        public IActionResult ModificacionPerfil(Usuario usuario)
+        {
+
+            // Guardar la imagen en el servidor
+            if (usuario.ImagenFile != null && usuario.ImagenFile.Length > 0)
+            {
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "img");
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(usuario.ImagenFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    usuario.ImagenFile.CopyTo(stream);
+                }
+
+                // Actualizar la propiedad Imagen con la ruta relativa del archivo guardado
+                usuario.Imagen = fileName;
+            }
+
+
+            int id = int.Parse(HttpContext.Session.GetString("id_usuario"));
+            Usuario usuarioExistente = _db.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
+
+            if (usuarioExistente != null)
+            {
+                // Actualiza las propiedades del usuario 
+                usuarioExistente.Nombre = usuario.Nombre;
+                usuarioExistente.Apellido = usuario.Apellido;
+                usuarioExistente.Email = usuario.Email;
+                usuarioExistente.Pais = usuario.Pais;
+                usuarioExistente.Estado = usuario.Estado;
+                usuarioExistente.Imagen = usuario.Imagen;
+                usuarioExistente.Password = usuario.Password;
+                usuarioExistente.Telefono = usuario.Telefono;
+
+
+                // Set la session
+                HttpContext.Session.SetString("id_usuario", usuarioExistente.IdUsuario.ToString());
+                HttpContext.Session.SetString("nombre_usuario", usuarioExistente.Nombre);
+                HttpContext.Session.SetString("email", usuarioExistente.Email);
+                HttpContext.Session.SetString("foto", usuarioExistente.Imagen);
+
+                // Guarda los cambios en la base de datos
+                _db.SaveChanges();
+            }
+
+
+
+            return RedirectToAction("Index", "Usuario");
+        }
+        #endregion
 
     }
 }
