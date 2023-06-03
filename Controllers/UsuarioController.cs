@@ -276,6 +276,30 @@ namespace MiChamba.Controllers
         }
         #endregion
 
+        #region POSTULARME - GET 
+        [HttpGet]
+        public IActionResult Postularme(int idOferta)
+        {
+            Postulacion postulacion = new Postulacion();
+
+            try
+            {
+                postulacion.IdOferta = idOferta;
+                postulacion.IdUsuario = int.Parse(HttpContext.Session.GetString("id_usuario"));
+                postulacion.EstadoPostulacion = "Enviada";
+                postulacion.FechaPostulacion = DateTime.Now;
+
+                _db.Postulaciones.Add(postulacion);
+                _db.SaveChanges();
+                return RedirectToAction("Postulaciones", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        #endregion
+
         #region SUBIR CV
         [HttpPost]
         public IActionResult RegistrarCV(Curriculum cv)
@@ -290,6 +314,7 @@ namespace MiChamba.Controllers
                 {
                     // Generar un nombre único para el archivo PDF
                     string nombreArchivo = cv.IdUsuario + "-" + HttpContext.Session.GetString("nombre_usuario") + ".pdf";
+                    nombreArchivo = nombreArchivo.Trim();
 
                     // Construir la ruta de destino
                     string rutaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" , "uploads", "pdf", nombreArchivo);
@@ -388,30 +413,44 @@ namespace MiChamba.Controllers
         #region  BUSCAR OFERTA INDIVIDUAL
         [HttpGet]
         public OfertaViewModel BuscarOferta(int idOferta){
-                
-            
-                OfertaViewModel? ofertaObtenida = _db.Ofertas
-                                            .Include(o => o.Empresa)
-                                            .OrderByDescending(i => i.FechaPublicacion)
-                                            .Take(6)
-                                            .Select(o => new OfertaViewModel
-                                            {
-                                                IdOferta = o.IdOferta,
-                                                Titulo = o.Titulo + " - " + o.Empresa.Nombre,
-                                                Descripcion = o.Descripcion.PadRight(10),
-                                                FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
-                                                Ciudad = o.Ubicacion,
-                                                Requisitos = JObject.Parse(o.Requisitos)
-                                            })
-                                            .Where(o => o.IdOferta == idOferta)
-                                            .FirstOrDefault() ?? new OfertaViewModel();
 
-                return ofertaObtenida;
+            OfertaViewModel ofertaPostulada = null;
+            List<OfertaViewModel>? ofertaObtenida = (from o in _db.Ofertas
+                                              join p in _db.Postulaciones on o.IdOferta equals p.IdOferta into op
+                                              from p in op.DefaultIfEmpty()
+                                              join u in _db.Usuarios on p.IdUsuario equals u.IdUsuario into pu
+                                              from u in pu.DefaultIfEmpty()
+                                              where o.IdOferta == idOferta 
+                                              select new OfertaViewModel
+                                              {
+                                                  IdOferta = o.IdOferta,
+                                                  Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                                  Descripcion = o.Descripcion.PadRight(10),
+                                                  FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
+                                                  Ciudad = o.Ubicacion,
+                                                  Requisitos = JObject.Parse(o.Requisitos),
+                                                  EstasPostulado = (u.IdUsuario.ToString() == HttpContext.Session.GetString("id_usuario")) ? "S" : "N" 
+                                              }).ToList();
+
+
+            foreach (var oferta in ofertaObtenida)
+            {
+                if (oferta.EstasPostulado == "S")
+                {
+                    ofertaPostulada = oferta;
+                    break;
+                }
+            }
+
+            if (ofertaPostulada == null)
+            {
+                ofertaPostulada = ofertaObtenida.FirstOrDefault();
+            }
+
+
+            return ofertaPostulada;
         }
         #endregion
-
-
-        
 
     }
 }

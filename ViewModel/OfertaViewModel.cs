@@ -10,6 +10,11 @@ namespace MiChamba.ViewModel
         public String? Ciudad { get; set; }
         public String? Descripcion { get; set; }
         public String? FechaPublicada { get; set; }
+
+        public String? EstadoPostulacion { get; set; }
+
+        public String? EstasPostulado { get; set; }
+
         public JObject? Requisitos { get; set; }
 
     }

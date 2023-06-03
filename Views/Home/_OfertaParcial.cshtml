@@ -11,21 +11,6 @@
             <div class="col-md-6">
                 <h3 class="text-dark">Descripción:</h3>
                 @Model.Descripcion
-
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                         @{
-                            if (Model.EstasPostulado == "S")
-                            {
-                                <span class="text-muted mt-5 p-2 text-white">Ya se ha postulado</span>
-                            }
-                            else{
-
-                                <a asp-action="Postularme" asp-route-idOferta="@Model.IdOferta" class="btn btn-success mt-3">Postularme</a>
-                            }
-                        }
-                    </div>
-                </div>
             </div>
             <div class="col-md-6">
                 <h3 class="text-dark">Requerimientos:</h3>
