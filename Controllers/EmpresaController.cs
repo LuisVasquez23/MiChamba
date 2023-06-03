@@ -164,13 +164,68 @@ namespace MiChamba.Controllers
 
             Empresa emprasario = _db.Empresas.FirstOrDefault(u => u.IdEmpresa == id);
 
-
-     
+            ViewBag.Vpais = emprasario.Estado;
+            ViewBag.Vestado = emprasario.Departamento;
 
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
 
             return View(emprasario);
+        }
+        #endregion
+
+        #region MofificacionPerfil - POST
+        [HttpPost]
+        public IActionResult ModificacionPerfil(Empresa emprasario)
+        {
+
+            // Guardar la imagen en el servidor
+            if (emprasario.ImagenFile != null && emprasario.ImagenFile.Length > 0)
+            {
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "img");
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(emprasario.ImagenFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    emprasario.ImagenFile.CopyTo(stream);
+                }
+
+                // Actualizar la propiedad Imagen con la ruta relativa del archivo guardado
+                emprasario.Imagen = fileName;
+            }
+
+
+            int id = int.Parse(HttpContext.Session.GetString("id_empresa"));
+            Empresa usuarioExistente = _db.Empresas.FirstOrDefault(u => u.IdEmpresa == id);
+
+
+            if (usuarioExistente != null)
+            {
+                // Actualiza las propiedades del usuario 
+                usuarioExistente.Nombre = emprasario.Nombre;
+                usuarioExistente.Descripcion = emprasario.Descripcion;
+                usuarioExistente.Direccion = emprasario.Direccion;
+                usuarioExistente.Email = emprasario.Email;
+                usuarioExistente.Estado = emprasario.Estado;
+                usuarioExistente.Departamento = emprasario.Departamento;
+                usuarioExistente.Imagen = emprasario.Imagen;
+                usuarioExistente.Password = emprasario.Password;
+                usuarioExistente.Telefono = emprasario.Telefono;
+
+
+                // Set la session
+                HttpContext.Session.SetString("id_empresa", usuarioExistente.IdEmpresa.ToString());
+                HttpContext.Session.SetString("nombre_empresa", usuarioExistente.Nombre);
+                HttpContext.Session.SetString("foto", usuarioExistente.Imagen);
+
+                // Guarda los cambios en la base de datos
+                _db.SaveChanges();
+            }
+
+
+            return RedirectToAction("Index", "Empresa");
         }
         #endregion
 

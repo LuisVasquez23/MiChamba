@@ -1,10 +1,12 @@
 ﻿@using MiChamba.ViewModel;
 @using MiChamba.Models;
-@model MiChamba.Models.Usuario
+@model MiChamba.Models.Empresa;
 
 @{
     Layout = "~/Views/Shared/_EmpresaLayout.cshtml";
  
+    var pais = ViewBag.Vpais;
+    var estado = ViewBag.Vestado;
 
 }
 
@@ -35,7 +37,7 @@
                 <div class="targetPerfil p-3">
                     <h2 class="text-white text-center pt-3">Modificacion de perfil</h2>
 
-                    <form asp-controller="Usuario" asp-action="ModificacionPerfil" enctype="multipart/form-data" method="post" id="registro-form" class="login-form w-80 text-center">
+                    <form asp-controller="Usuario" asp-action="ModificacionEmpresa" enctype="multipart/form-data" method="post" id="registro-form" class="login-form w-80 text-center">
                         <div class="row">
 
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -49,31 +51,11 @@
 
                             <!-- Apellidos -->
                             <div class="col-md-6 mt-md-2">
-                                <label for="apellidos" asp-for="Apellido">Apellidos: </label>
-                                <input type="text" asp-for="Apellido" class="form-control" name="Apellido" id="apellidos" required />
-                                <span asp-validation-for="Apellido" class="text-danger"></span>
+                                <label for="Descripcion" asp-for="Descripcion">Descripcion: </label>
+                                <input type="text" asp-for="Descripcion" class="form-control" name="Descripcion" id="Descripcion" required />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
                             </div>
 
-                            <!-- Pais -->
-                            <div class="col-md-6">
-                                <fieldset class="mt-md-2">
-                                    <label for="pais">Pais: </label>
-                                    <input type="text" value="@pais" class="form-control" name="iPais" id="iPais" hidden />
-                                    <select id="pais" name="Pais" class="form-control">
-                                    </select>
-                                </fieldset>
-                            </div>
-
-                            <!-- Departamento -->
-                            <div class="col-md-6">
-                                <fieldset class="mt-md-2">
-                                    <label for="departamento">Departamento: </label>
-                                    <input type="text" value="@estado" class="form-control" name="iEstado" id="iEstado" hidden />
-                                    <select id="departamento" name="Estado" class="form-control">
-                                        <option>Selecciona un departamento...</option>
-                                    </select>
-                                </fieldset>
-                            </div>
 
                             <!-- Correo -->
                             <div class="col-md-6">
@@ -83,6 +65,29 @@
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </fieldset>
                             </div>
+
+                            <!-- Pais -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="Estado">Pais: </label>
+                                    <input type="text" value="@pais" class="form-control" name="iPais" id="iPais" hidden />
+                                    <select id="Estado" name="Estado" class="form-control">
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            <!-- Departamento -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="Departamento">Departamento: </label>
+                                    <input type="text" value="@estado" class="form-control" name="iEstado" id="iEstado" hidden />
+                                    <select id="Departamento" name="Estado" class="form-control">
+                                        <option>Selecciona un departamento...</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            
 
                             <!-- Password -->
                             <div class="col-md-6">
@@ -162,16 +167,18 @@
 
     }
 
+
+
     // DECLARACION DE VARIABLES
-    let $departamentosSelect = document.getElementById('departamento');
-    let $paisSelect = document.getElementById('pais');
+    let $departamentosSelect = document.getElementById('Departamento');
+    let $paisSelect = document.getElementById('Estado');
     let paisSeleccionado = document.getElementById('iPais');
     let paisValue = paisSeleccionado.value;
     let EstadoSeleccionado = document.getElementById('iEstado');
     let estadoValue = EstadoSeleccionado.value;
 
-
-
+    console.log(paisSeleccionado);
+    console.log(EstadoSeleccionado);
 
 
     document.addEventListener("DOMContentLoaded", () => {
