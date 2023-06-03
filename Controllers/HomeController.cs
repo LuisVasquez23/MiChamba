@@ -69,11 +69,11 @@ namespace MiChamba.Controllers
                                                      select new OfertaViewModel
                                                      {
                                                          IdOferta = o.IdOferta,
-                                                         Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                                         Titulo = o.Titulo ,
                                                          Descripcion = o.Descripcion.PadRight(10),
                                                          FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
                                                          Ciudad = o.Ubicacion,
-                                                         Requisitos = JObject.Parse(o.Requisitos),
+                                                         Requisitos = JObject.Parse(o.Requisitos.Replace("'", "\"")),
                                                          EstasPostulado = (u.IdUsuario.ToString() == HttpContext.Session.GetString("id_usuario")) ? "S" : "N"
                                                      }).FirstOrDefault();
 
@@ -99,16 +99,15 @@ namespace MiChamba.Controllers
         public List<OfertaViewModel> ListarOfertas()
         {
             List<OfertaViewModel> ListaOfertas = _db.Ofertas
-                                        .Include(o => o.Empresa)
                                         .OrderByDescending( i => i.FechaPublicacion)
                                         .Take(6)
                                         .Select( o => new OfertaViewModel
                                         {
                                             IdOferta = o.IdOferta,
-                                            Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                            Titulo = o.Titulo,
                                             Descripcion = o.Descripcion.PadRight(10),
                                             FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
-                                            Requisitos = JObject.Parse(o.Requisitos)
+                                            Requisitos = JObject.Parse(o.Requisitos.Replace("'", "\""))
                                         })
                                         .DefaultIfEmpty().ToList();
 
@@ -155,17 +154,16 @@ namespace MiChamba.Controllers
         public OfertaViewModel ObtenerOferta(int idOfertaP)
         {
             OfertaViewModel? ofertaObtenida = _db.Ofertas
-                                        .Include(o => o.Empresa)
                                         .OrderByDescending(i => i.FechaPublicacion)
                                         .Take(6)
                                         .Select(o => new OfertaViewModel
                                         {
                                             IdOferta = o.IdOferta,
-                                            Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                            Titulo = o.Titulo,
                                             Descripcion = o.Descripcion.PadRight(10),
                                             FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
                                             Ciudad = o.Ubicacion,
-                                            Requisitos = JObject.Parse(o.Requisitos)
+                                            Requisitos = JObject.Parse(o.Requisitos.Replace("'", "\""))
                                         })
                                         .Where( o => o.IdOferta == idOfertaP)
                                         .FirstOrDefault() ?? new OfertaViewModel();

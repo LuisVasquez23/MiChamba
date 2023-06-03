@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["title"] = "Crear oferta";
+    Layout = "~/Views/Shared/_EmpresaLayout.cshtml";
+}
+
+<style>
+    .form-control {
+        background: #fff !important;
+    }
+</style>
+
+<div class="container">
+    <div class="bg-dark p-4 rounded">
+        <form asp-action="CrearOferta" method="post" class="w-100">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group gap-2">
+                        <h2>Información general</h2>
+                        <label for="titulo" class="text-white">Titulo: </label>
+                        <input type="text" name="Titulo" class="form-control" />
+                    </div>
+                    <div class="form-group gap-2">
+                        <label for="Descripcion" class="text-white">Descripcion: </label>
+                        <textarea name="Descripcion" id="Descripcion" class="form-control">
+
+                        </textarea>
+                    </div>
+                    <div class="form-group gap-2">
+                        <label for="Ubicacion" class="text-white">Ubicación: </label>
+                        <input type="text" name="Ubicacion" class="form-control" />
+                    </div>
+                    
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group mt-1">
+                        <h2>Requisitos</h2>
+                        <label for="educacion" class="text-white">Educación: </label>
+                        <input type="text" name="Educacion" id="Educacion" class="form-control" />
+
+                        <label for="Experiencia" class="text-white">Experiencia: </label>
+                        <textarea id="Experiencia" name="Experiencia" class="form-control">
+
+                        </textarea>
+
+                        <label for="Habilidades" class="text-white">Habilidades: </label>
+                        <textarea id="Habilidades" name="Habilidades" class="form-control">
+
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <input type="submit" class="btn btn-success" value="Crear" />
+        </form>
+    </div>
+</div>
+
+<script>
+   
+
+</script>

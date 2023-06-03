@@ -25,10 +25,6 @@ namespace MiChamba.Data
         //LLaves foraneas
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Oferta>() 
-            .HasOne(o => o.Empresa) //1
-            .WithMany(e => e.Ofertas) //*
-            .HasForeignKey(o => o.IdEmpresa); //id
         }
 
     }

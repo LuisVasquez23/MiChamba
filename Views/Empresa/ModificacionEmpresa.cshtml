@@ -1,0 +1,261 @@
+﻿@using MiChamba.ViewModel;
+@using MiChamba.Models;
+@model MiChamba.Models.Empresa;
+
+@{
+    Layout = "~/Views/Shared/_EmpresaLayout.cshtml";
+ 
+    var pais = ViewBag.Vpais;
+    var estado = ViewBag.Vestado;
+
+}
+
+
+
+<style>
+
+    #content-height2 {
+        width: 100%;
+        max-width: 950px;
+        height: 100%;
+        min-height: 520px;
+        background-color: #212A3E;
+        border-radius: 15px;
+        padding-bottom: 10px;
+    }
+
+    .form-control {
+        background: #fff !important;
+    }
+
+</style>
+
+<div class="container mt-5 pt-1" style="display:flex; justify-content:center;">
+    <div id="content-height2">
+        <div class="row col-lg-12">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="targetPerfil p-3">
+                    <h2 class="text-white text-center pt-3">Modificacion de perfil</h2>
+
+                    <form asp-controller="Empresa" asp-action="ModificacionEmpresa" enctype="multipart/form-data" method="post" id="registro-form" class="login-form w-80 text-center">
+                        <div class="row">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <!-- Nombres -->
+                            <div class="col-md-6 mt-md-2">
+                                <label for="nombres" asp-for="Nombre">Nombres: </label>
+                                <input type="text" asp-for="Nombre" class="form-control" name="Nombre" id="nombres" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+
+                            <!-- Apellidos -->
+                            <div class="col-md-6 mt-md-2">
+                                <label for="Descripcion" asp-for="Descripcion">Descripcion: </label>
+                                <input type="text" asp-for="Descripcion" class="form-control" name="Descripcion" id="Descripcion" required />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                            </div>
+
+
+                            <!-- Correo -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="email" asp-for="Email">Correo: </label>
+                                    <input type="email" class="form-control" asp-for="Email" name="Email" id="email" required />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                            <!-- Direccion -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="Direccion">Direccion: </label>
+                                    <input type="Direccion" class="form-control" asp-for="Direccion" name="Direccion" id="Direccion" required />
+                                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                            
+                            
+
+                            <!-- Password -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="password" asp-for="Password">Password: </label>
+                                    <input type="text" asp-for="Password" class="form-control" name="Password" id="password" required />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                            <!-- Telefono -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="telefono" asp-for="Telefono">Telefono: </label>
+                                    <input type="text" asp-for="Telefono" class="form-control" name="Telefono" id="telefono" required />
+                                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                            <!-- Foto de perfil -->
+                            <div class="col-md-6">
+                                <fieldset class="mt-md-2">
+                                    <label for="foto_perfil">Foto: </label>
+                                    <input type="text" asp-for="Imagen" class="form-control" name="imagen" id="imagen" hidden />
+                                    <input type="file" class="form-control" name="ImagenFile" id="foto_perfil" />
+                                </fieldset>
+                            </div>
+
+                            <!-- Btn Registro -->
+                            <div class="row ">
+                                <div class="col-md-6  mt-4 mx-auto text-center">
+
+                                    <input type="submit" class="btn btn-login text-white w-100" name="Registrar" value="Actualizar" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+<script>
+    const Ajax = (props) => {
+
+        let { url, cbSuccess } = props;
+
+        const API_KEY = "Z2NFeGlpTXY2WDJwM05hdkhYQkxHRXdjdDdTVktXeDVSeW1LMmdQOA==";
+
+        let headers = new Headers();
+        headers.append("X-CSCAPI-KEY", API_KEY);
+
+        let requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        fetch(url, requestOptions)
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(json => cbSuccess(json))
+            .catch(err => {
+                console.log(`Error: ${err}`)
+            });
+
+    }
+
+
+
+    // DECLARACION DE VARIABLES
+    let $departamentosSelect = document.getElementById('Departamento');
+    let $paisSelect = document.getElementById('Estado');
+    let paisSeleccionado = document.getElementById('iPais');
+    let paisValue = paisSeleccionado.value;
+    let EstadoSeleccionado = document.getElementById('iEstado');
+    let estadoValue = EstadoSeleccionado.value;
+
+    console.log(paisSeleccionado);
+    console.log(EstadoSeleccionado);
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        // Obtén el país seleccionado desde el controlador y asígnalo aquí
+
+        cargarPais(paisValue);
+
+
+
+        let value = paisValue.substring(0, paisValue.indexOf("-"));
+        console.log(value);
+
+        cargarEstados(value);
+
+
+    });
+
+    $paisSelect.addEventListener("change", (event) => {
+        let { value } = event.target;
+
+        value = value.substring(0, value.indexOf("-"));
+        console.log(value);
+
+        cargarEstados(value)
+    })
+
+    const cargarPais = (paisValue) => {
+        const url = "https://api.countrystatecity.in/v1/countries/";
+
+        Ajax({
+            url,
+            cbSuccess: (data) => {
+                const fragment = document.createDocumentFragment();
+
+                $paisSelect.innerHTML = "<option>Selecciona un pais...</option>";
+
+                data.forEach((pais) => {
+                    const option = document.createElement("option");
+
+
+                    let valor = pais.iso2 + '-' + pais.name;
+                    option.value = pais.iso2 + '-' + pais.name;
+                    option.textContent = pais.name;
+
+                    if (paisValue === valor) {
+                        option.selected = true;
+                    }
+
+                    fragment.appendChild(option);
+                });
+
+                $paisSelect.appendChild(fragment);
+            }
+        });
+    }
+
+    const cargarEstados = (pais) => {
+        const url = `https://api.countrystatecity.in/v1/countries/${pais}/states`;
+
+        Ajax({
+            url,
+            cbSuccess: (data) => {
+                const fragment = document.createDocumentFragment();
+
+                $departamentosSelect.innerHTML = "<option>Selecciona un departamento...</option>";
+
+                data.forEach((departamento) => {
+                    const option = document.createElement("option");
+
+                    option.value = departamento.name;
+                    option.textContent = departamento.name;
+
+
+                    if (departamento.name === estadoValue) {
+                        option.selected = true;
+                    }
+
+                    fragment.appendChild(option);
+                });
+
+                $departamentosSelect.appendChild(fragment)
+            }
+        });
+    }
+
+
+</script>
+
+
+

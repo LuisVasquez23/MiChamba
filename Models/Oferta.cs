@@ -6,10 +6,6 @@ namespace MiChamba.Models
     [Table("OFERTA")]
     public class Oferta
     {
-        public Oferta()
-        {
-            Empresa = new Empresa();
-        }
 
         [Key]
         [Column("ID_OFERTA")]
@@ -36,10 +32,15 @@ namespace MiChamba.Models
         [Column("ID_EMPRESA")]
         public int IdEmpresa { get; set; }
 
-        [ForeignKey("IdEmpresa")]
-        public virtual Empresa Empresa { get; set; }
 
-        public virtual ICollection<Postulacion> Postulaciones { get; set; }
+        [NotMapped]
+        public String Educacion { get; set; }
+
+        [NotMapped]
+        public String Experiencia { get; set; }
+
+        [NotMapped]
+        public String Habilidades { get; set; }
 
     }
 }
