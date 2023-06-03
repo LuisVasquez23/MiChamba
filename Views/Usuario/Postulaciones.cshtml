@@ -1,0 +1,42 @@
+﻿@using MiChamba.Models;
+
+@{
+    Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
+
+    List<object> postulaciones = ViewBag.postulaciones;
+}
+
+
+<div class="bg-dark">
+    <div class="container-fluid bg-white p-5 rounded mb-5 " id="ofertas-section">
+
+        <h3 class="h2 mt-5">ÚLTIMAS OFERTAS PUBLICADAS</h3>
+
+        <div class="container d-flex align-items-center">
+            <div class="ultimas-ofertas mt-5">
+                @{
+                    foreach (var postulacion in postulaciones)
+                    {
+                        <div class="card-oferta">
+                            <div class="card-oferta-title bg-dark text-white">
+                                @postulacion.GetType().GetProperty("titulo")?.GetValue(postulacion)?.ToString()
+                            </div>
+                            <div class="card-oferta-description">
+                                @postulacion.GetType().GetProperty("descripcion")?.GetValue(postulacion)?.ToString()
+                            </div>
+                            <div class="card-oferta-moreinfo">
+                                <span class="text-muted">
+                                    @postulacion.GetType().GetProperty("estado")?.GetValue(postulacion)?.ToString()
+                                </span>
+                            </div>
+                            <div>
+                                <a asp-controller="Home" asp-action="Oferta"  class="btn bg-dark text-white">Ver oferta</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+</div>
+
+

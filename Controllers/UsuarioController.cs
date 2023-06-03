@@ -1,6 +1,7 @@
 ﻿using MiChamba.Data;
 using MiChamba.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MiChamba.Controllers
 {
@@ -166,12 +167,49 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-
+        #region MODIFICACIONES PERFIL - GET
         public IActionResult ModificacionPerfil()
         {
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
             return View();
+        }
+        #endregion
+
+
+        public IActionResult Postulaciones() {
+
+            if (!VerifyUserLogin())
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.postulaciones = PostulacionesUsuario();
+            ViewBag.foto = HttpContext.Session.GetString("foto");
+
+            return View();
+        }
+
+        // HELPERS
+        public List<object> PostulacionesUsuario()
+        {
+            int idUsuario = int.Parse(HttpContext.Session.GetString("id_usuario"));
+
+            var MisPostulaciones = (
+                                                    from postulacion in _db.Postulaciones
+                                                    join oferta in _db.Ofertas  on postulacion.IdOferta equals oferta.IdOferta
+                                                    where postulacion.IdUsuario == idUsuario
+                                                    select new
+                                                    {
+                                                        titulo = oferta.Titulo,
+                                                        descripcion = oferta.Descripcion,
+                                                        estado = postulacion.EstadoPostulacion
+                                                    }
+                                                ).DefaultIfEmpty().ToList<object>();
+
+
+            return MisPostulaciones;
+
         }
 
     }
