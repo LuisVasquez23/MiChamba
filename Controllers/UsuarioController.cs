@@ -207,7 +207,7 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-        #region REGISTRO - POST
+        #region MofificacionPerfil - POST
         [HttpPost]
         public IActionResult ModificacionPerfil(Usuario usuario)
         {

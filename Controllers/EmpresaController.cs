@@ -138,6 +138,42 @@ namespace MiChamba.Controllers
         }
         #endregion
 
+        #region AJUSTES - GET
+        public IActionResult Ajustes()
+        {
+
+            if (!VerifyEmpresaLogin())
+            {
+                return RedirectToAction("Login");
+            }
+
+            int idUsuario = int.Parse(HttpContext.Session.GetString("id_empresa"));
+
+   
+            ViewBag.foto = HttpContext.Session.GetString("foto");
+
+            return View();
+        }
+        #endregion
+
+        #region METODIFICACION Empresa - GET
+        public IActionResult ModificacionEmpresa()
+        {
+
+            int id = int.Parse(HttpContext.Session.GetString("id_empresa"));
+
+            Empresa emprasario = _db.Empresas.FirstOrDefault(u => u.IdEmpresa == id);
+
+
+     
+
+
+            ViewBag.foto = HttpContext.Session.GetString("foto");
+
+            return View(emprasario);
+        }
+        #endregion
+
         #region ADMINISTRAR POSTULACIONES
         public IActionResult AdministrarPostulaciones()
         {
