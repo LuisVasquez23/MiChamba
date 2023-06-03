@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
+
 namespace MiChamba.Controllers
 {
     public class UsuarioController : BaseController<UsuarioController>
@@ -185,6 +186,43 @@ namespace MiChamba.Controllers
         }
         #endregion
 
+        public IActionResult Postulaciones() {
+
+            if (!VerifyUserLogin())
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.postulaciones = PostulacionesUsuario();
+            ViewBag.foto = HttpContext.Session.GetString("foto");
+
+            return View();
+        }
+
+        // HELPERS
+        #region POSTULACIONS DEL USUARIO
+        public List<object> PostulacionesUsuario()
+        {
+            int idUsuario = int.Parse(HttpContext.Session.GetString("id_usuario"));
+
+            var MisPostulaciones = (
+                                                    from postulacion in _db.Postulaciones
+                                                    join oferta in _db.Ofertas  on postulacion.IdOferta equals oferta.IdOferta
+                                                    where postulacion.IdUsuario == idUsuario
+                                                    select new
+                                                    {
+                                                        titulo = oferta.Titulo,
+                                                        descripcion = oferta.Descripcion,
+                                                        estado = postulacion.EstadoPostulacion
+                                                    }
+                                                ).DefaultIfEmpty().ToList<object>();
+
+
+            return MisPostulaciones;
+
+        }
+        #endregion
+
         #region OFERTA - DINAMICA 
         public ActionResult Oferta(int idOferta)
         {
@@ -241,30 +279,6 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-        #region OBTENER EL TIEMPO DE  PUBLICACION
-        public static string ObtenerTiempoPublicacion(DateTime fechaPublicacion)
-        {
-            TimeSpan tiempoTranscurrido = DateTime.Now - fechaPublicacion;
-
-            if (tiempoTranscurrido.TotalMinutes < 60)
-            {
-                return $"Hace {tiempoTranscurrido.TotalMinutes:N0} minutos";
-            }
-            else if (tiempoTranscurrido.TotalHours < 24)
-            {
-                return $"Hace {tiempoTranscurrido.TotalHours:N0} horas";
-            }
-            else if (tiempoTranscurrido.TotalDays < 30)
-            {
-                return $"Hace {tiempoTranscurrido.TotalDays:N0} días";
-            }
-            else
-            {
-                int mesesTranscurridos = (int)(tiempoTranscurrido.TotalDays / 30);
-                return (mesesTranscurridos <= 1) ? $"Hace {mesesTranscurridos:N0} mes" : $"Hace {mesesTranscurridos:N0} meses";
-            }
-        }
-        #endregion
 
         
     }

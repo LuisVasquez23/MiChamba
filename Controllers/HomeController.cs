@@ -143,30 +143,7 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-        #region OBTENER EL TIEMPO DE  PUBLICACION
-        public static string ObtenerTiempoPublicacion(DateTime fechaPublicacion)
-        {
-            TimeSpan tiempoTranscurrido = DateTime.Now - fechaPublicacion;
-
-            if (tiempoTranscurrido.TotalMinutes < 60)
-            {
-                return $"Hace {tiempoTranscurrido.TotalMinutes:N0} minutos";
-            }
-            else if (tiempoTranscurrido.TotalHours < 24)
-            {
-                return $"Hace {tiempoTranscurrido.TotalHours:N0} horas";
-            }
-            else if (tiempoTranscurrido.TotalDays < 30)
-            {
-                return $"Hace {tiempoTranscurrido.TotalDays:N0} días";
-            }
-            else
-            {
-                int mesesTranscurridos = (int)(tiempoTranscurrido.TotalDays / 30);
-                return (mesesTranscurridos <= 1) ? $"Hace {mesesTranscurridos:N0} mes" : $"Hace {mesesTranscurridos:N0} meses";
-            }
-        }
-        #endregion
+        
 
     }
 }
