@@ -1,6 +1,7 @@
 ﻿@using MiChamba.ViewModel;
 @using MiChamba.Models;
 
+
 @{
     ViewData["Title"] = "Trabajemos juntos";
 
@@ -108,8 +109,82 @@
 
         </div>
         <!-- FIN RECURSOS -->
-        <!-- Fin Vista -->
+
+
+     
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- INICIO ESTADÍSTICAS -->
+    <div class="container-fluid bg-light p-5 rounded mb-5" id="estadisticas-section">
+        <h3 class="h2">ESTADÍSTICAS</h3>
+
+        <div class="container d-flex flex-wrap justify-content-center mt-5">
+            <canvas id="graficoEstadisticas"></canvas>
+        </div>
+    </div>
+    <!-- FIN ESTADÍSTICAS -->
+
+    <!-- Fin Vista -->
 </div>
+
+
+<script>
+    // Obtener referencias a los elementos HTML
+    var canvas = document.getElementById('graficoEstadisticas');
+    var ctx = canvas.getContext('2d');
+
+    // Datos para el gráfico
+    var data = {
+        labels: ['Total de ofertas', 'Candidatos registrados', 'Empresas registradas'],
+        datasets: [{
+            label: 'Estadísticas',
+            data: [@ViewBag.totalOfertas, @ViewBag.totalUsuarios, @ViewBag.totalEmpresas],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Opciones de configuración del gráfico
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    };
+
+    // Crear el gráfico utilizando los datos y opciones
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+    });
+</script>
+
+
