@@ -399,10 +399,10 @@ namespace MiChamba.Controllers
                                                         select new OfertaViewModel
                                                         {
                                                             IdOferta = oferta.IdOferta,
-                                                            Titulo = oferta.Titulo + " - " + oferta.Empresa.Nombre,
+                                                            Titulo = oferta.Titulo,
                                                             Descripcion = oferta.Descripcion.PadRight(10),
                                                             FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
-                                                            Requisitos = JObject.Parse(oferta.Requisitos)
+                                                            Requisitos = JObject.Parse(oferta.Requisitos.Replace("'", "\""))
                                                         }
                                       ).ToList();
 
@@ -424,11 +424,11 @@ namespace MiChamba.Controllers
                                               select new OfertaViewModel
                                               {
                                                   IdOferta = o.IdOferta,
-                                                  Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                                  Titulo = o.Titulo ,
                                                   Descripcion = o.Descripcion.PadRight(10),
                                                   FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
                                                   Ciudad = o.Ubicacion,
-                                                  Requisitos = JObject.Parse(o.Requisitos),
+                                                  Requisitos = JObject.Parse(o.Requisitos.Replace("'", "\"")),
                                                   EstasPostulado = (u.IdUsuario.ToString() == HttpContext.Session.GetString("id_usuario")) ? "S" : "N" 
                                               }).ToList();
 

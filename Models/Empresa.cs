@@ -6,11 +6,6 @@ namespace MiChamba.Models
     [Table("EMPRESA")]
     public class Empresa
     {
-        public Empresa()
-        {
-            Ofertas = new List<Oferta>();
-            Calificaciones = new List<Calificacion>();
-        }
 
         [Key]
         [Column("ID_EMPRESA")] 
@@ -48,9 +43,6 @@ namespace MiChamba.Models
         [Column("TELEFONO")]
         [RegularExpression(@"^\d{4}-\d{4}$", ErrorMessage = "El formato del teléfono no es válido.")]
         public string Telefono { get; set; }
-
-        public virtual ICollection<Oferta> Ofertas { get; set; }
-        public virtual ICollection<Calificacion> Calificaciones { get; set; }
 
 
     }
