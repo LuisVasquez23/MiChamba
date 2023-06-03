@@ -1,6 +1,7 @@
 ﻿@using MiChamba.ViewModel;
 @using MiChamba.Models;
 
+
 @{
     ViewData["Title"] = "Perfil Profesional";
     Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
@@ -33,6 +34,22 @@
                                         <a asp-action="ModificacionPerfil" class="btn btn-primary w-100" >Editar perfil</a>
                                     </div>
                                 </div>
+
+                                <div class="row d-flex mt-2">
+                                    <div class="col-6">
+                                        <form asp-controller="Usuario" asp-action="AgregarCurriculum" enctype="multipart/form-data" method="post">
+                                            <div class="form-group">
+                                                <label for="curriculumFile">Currículum: </label>
+                                                <input type="file" class="form-control" name="curri" id="curri" accept=".pdf" />
+                                            </div>
+                                            <fieldset class="mt-md-2">
+                                                <input type="submit" class="btn btn-login text-white w-100" name="SubirCurrículum" value="Subir Currículum" />
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+
+
 
                             </div>
                         </div>

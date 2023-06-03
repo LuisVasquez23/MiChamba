@@ -36,7 +36,7 @@ namespace MiChamba.Models
         public string? Estado { get; set; }
 
         [Column("IMAGEN")]
-        public string Imagen { get; set; }
+        public string? Imagen { get; set; }
 
         [Column("PASSWORD")]
         [Required(ErrorMessage = "La contraseña del usuario es requerida.")]

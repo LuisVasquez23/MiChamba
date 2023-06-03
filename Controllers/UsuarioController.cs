@@ -186,6 +186,9 @@ namespace MiChamba.Controllers
         }
         #endregion
 
+
+
+
         public IActionResult Postulaciones() {
 
             if (!VerifyUserLogin())
@@ -280,6 +283,53 @@ namespace MiChamba.Controllers
         #endregion
 
 
-        
+        #region AgregarCurriculum - POST
+        [HttpPost]
+        public IActionResult AgregarCurriculum(IFormFile curri)
+        {
+            // Verificar si se seleccionó un archivo válido
+            if (curri != null && curri.Length > 0)
+            {
+                // Crear una carpeta específica para los currículums
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "curriculums");
+                // Generar un nombre de archivo único
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(curri.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                // Guardar el archivo en el servidor
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    curri.CopyTo(stream);
+                }
+                // Crear una instancia de Curriculum y establecer sus propiedades
+                var curriculum = new Curriculum
+                {
+                    IdUsuario = int.Parse(HttpContext.Session.GetString("id_usuario")), /* Obtener el ID del usuario correspondiente */
+                    NombreArchivo = fileName
+                };
+                Console.WriteLine(curriculum);
+                // Agregar el objeto Curriculum al contexto y guardar los cambios en la base de datos
+                _db.Curriculums.Add(curriculum);
+                _db.SaveChanges();
+
+                // Realizar otras operaciones con el archivo del currículum, si es necesario
+
+                // Realizar otras operaciones con el archivo del currículum, si es necesario
+
+                // Redirigir a una vista o realizar alguna otra acción
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                // Manejo del caso cuando no se seleccionó ningún archivo
+                // Por ejemplo, mostrar un mensaje de error o redirigir a otra vista
+                return RedirectToAction("Ajustes");
+            }
+
+
+        }
+        #endregion
+
+
     }
 }
