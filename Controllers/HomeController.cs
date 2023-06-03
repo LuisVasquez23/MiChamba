@@ -44,17 +44,55 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-        #region OFERTA - POST
-        [HttpPost]
-        public IActionResult Oferta(IFormCollection form)
-        {
-            string valorBuscar = form["ofertaSearch"].ToString();
 
-            ViewBag.ofertasBuscadas = BuscarOferta(valorBuscar) ?? Enumerable.Empty<OfertaViewModel>();
+        #region OFERTA - DINAMICA 
+        public ActionResult OfertaParcial(int idOferta)
+        {
+            // Lógica para obtener el contenido dinámico actualizado
+            OfertaViewModel oferta = BuscarOfertaIndividual(idOferta);
+
+            // Devuelve la vista parcial actualizada
+            return PartialView("_OfertaParcial", oferta);
+        }
+        #endregion
+
+        [HttpGet]
+        public OfertaViewModel BuscarOfertaIndividual(int idOferta)
+        {
+
+            OfertaViewModel? ofertaPostulada = (from o in _db.Ofertas
+                                                     join p in _db.Postulaciones on o.IdOferta equals p.IdOferta into op
+                                                     from p in op.DefaultIfEmpty()
+                                                     join u in _db.Usuarios on p.IdUsuario equals u.IdUsuario into pu
+                                                     from u in pu.DefaultIfEmpty()
+                                                     where o.IdOferta == idOferta
+                                                     select new OfertaViewModel
+                                                     {
+                                                         IdOferta = o.IdOferta,
+                                                         Titulo = o.Titulo + " - " + o.Empresa.Nombre,
+                                                         Descripcion = o.Descripcion.PadRight(10),
+                                                         FechaPublicada = ObtenerTiempoPublicacion(o.FechaPublicacion),
+                                                         Ciudad = o.Ubicacion,
+                                                         Requisitos = JObject.Parse(o.Requisitos),
+                                                         EstasPostulado = (u.IdUsuario.ToString() == HttpContext.Session.GetString("id_usuario")) ? "S" : "N"
+                                                     }).FirstOrDefault();
+
+
+            return ofertaPostulada;
+        }
+
+        [HttpPost]
+        public IActionResult Ofertas(IFormCollection formBusqueda)
+        {
+
+            string valorBuscado = formBusqueda["ofertaSearch"].ToString();
+
+            ViewBag.foto = HttpContext.Session.GetString("foto");
+            ViewBag.ofertaBuscada = valorBuscado;
+            ViewBag.ofertas = BuscarOferta(valorBuscado);
 
             return View();
         }
-        #endregion
 
         // HELPERS
         #region LISTAR OFERTAS
