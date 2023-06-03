@@ -150,6 +150,47 @@ namespace MiChamba.Controllers
         }
         #endregion
 
+        #region CREAR OFERTA  - GET
+        public IActionResult CrearOferta()
+        {
+            if (!VerifyEmpresaLogin())
+            {
+                return RedirectToAction("Login");
+            }
+
+            ViewBag.foto = HttpContext.Session.GetString("foto");
+
+            return View();
+        }
+        #endregion
+
+        #region 
+        [HttpPost]
+        public IActionResult CrearOferta(Oferta oferta)
+        {
+            try
+            {
+                oferta.Requisitos = "{'educacion': '" + oferta.Educacion + "',"
+                                + "'experiencia': '" + oferta.Experiencia + "',"
+                                + "'habilidades': ['" + oferta.Habilidades.Replace(",", "','") + "']}".Replace("'","\"");
+
+                oferta.IdEmpresa = int.Parse(HttpContext.Session.GetString("id_empresa"));
+
+                oferta.FechaPublicacion = DateTime.Now;
+
+                _db.Ofertas.Add(oferta);
+                _db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+
+            }
+
+
+
+            return RedirectToAction("Index");
+        }
+        #endregion
 
         // HELPERS
         #region OFERTAS DISPONIBLES
@@ -160,7 +201,7 @@ namespace MiChamba.Controllers
                            select new OfertaViewModel
                            {
                                IdOferta = oferta.IdOferta,
-                               Titulo = oferta.Titulo + " - " + oferta.Empresa.Nombre,
+                               Titulo = oferta.Titulo,
                                Descripcion = oferta.Descripcion.PadRight(10),
                                FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
                                Ciudad = oferta.Ubicacion,
