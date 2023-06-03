@@ -1,6 +1,8 @@
 ﻿using MiChamba.Data;
 using MiChamba.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace MiChamba.Controllers
 {
@@ -170,9 +172,41 @@ namespace MiChamba.Controllers
         public IActionResult ModificacionPerfil()
         {
 
+            int id = int.Parse(HttpContext.Session.GetString("id_usuario"));
+
+            var Usuario = (from usuario in _db.Usuarios
+                           where usuario.IdUsuario == id
+                           select new
+                           {
+                               usuario.IdUsuario,
+                               usuario.Nombre,
+                               usuario.Apellido,
+                               usuario.Email,
+                               usuario.Password,
+                               usuario.Estado,
+                               usuario.Pais,
+                               usuario.Telefono,
+                               usuario.Imagen
+
+                           }).FirstOrDefault();
+
+            ViewBag.datosUsuario = Usuario;
+
+
+            var nombre = Request.Form["Nombre"];
+            var apellido = Request.Form["Apellido"];
+            var email = Request.Form["Email"];
+            var password = Request.Form["Password"];
+
+
+
+
+
             ViewBag.foto = HttpContext.Session.GetString("foto");
             return View();
         }
+
+
 
     }
 }
