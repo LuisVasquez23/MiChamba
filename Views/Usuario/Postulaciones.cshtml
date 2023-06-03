@@ -1,36 +1,45 @@
-﻿@using MiChamba.Models;
+﻿@using MiChamba.ViewModel;
 
 @{
     Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
 
-    List<object> postulaciones = ViewBag.postulaciones;
+    List<PostulacionViewModel> postulaciones = ViewBag.postulaciones;
 }
 
 
-<div class="bg-dark">
-    <div class="container-fluid bg-white p-5 rounded mb-5 " id="ofertas-section">
-
-        <h3 class="h2" style="color: black!important;">ÚLTIMAS OFERTAS PUBLICADAS</h3>
+<div>
+    <div class="container-fluid bg-white rounded mb-5 " id="ofertas-section">
 
         <div class="container d-flex align-items-center">
             <div class="ultimas-ofertas mt-5">
                 @{
-                    foreach (var postulacion in postulaciones)
+
+                    if (postulaciones.Count > 0)
                     {
-                        <div class="card-oferta">
-                            <div class="card-oferta-title bg-dark text-white">
-                                @postulacion.GetType().GetProperty("titulo")?.GetValue(postulacion)?.ToString()
+                        foreach (PostulacionViewModel postulacion in postulaciones)
+                        {
+                            <div class="card-oferta">
+                                <div class="card-oferta-title bg-dark text-white p-2 fs-4">
+                                    @postulacion.GetType().GetProperty("titulo")?.GetValue(postulacion)?.ToString()
+                                </div>
+                                <div class="card-oferta-description">
+                                    @postulacion.GetType().GetProperty("descripcion")?.GetValue(postulacion)?.ToString()
+                                </div>
+                                <div class="card-oferta-moreinfo">
+                                    <span class="text-muted">
+                                        @postulacion.GetType().GetProperty("estado")?.GetValue(postulacion)?.ToString()
+                                    </span>
+                                </div>
                             </div>
-                            <div class="card-oferta-description">
-                                @postulacion.GetType().GetProperty("descripcion")?.GetValue(postulacion)?.ToString()
-                            </div>
-                            <div class="card-oferta-moreinfo">
-                                <span class="text-muted">
-                                    @postulacion.GetType().GetProperty("estado")?.GetValue(postulacion)?.ToString()
-                                </span>
-                            </div>
-                        </div>
+                        }
                     }
+                    else
+                    {
+                        <h3 class="h4 text-muted">No tienes postulaciones</h3>
+                    }
+
+                    
+                   
                 }
             </div>
         </div>

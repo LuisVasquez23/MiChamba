@@ -28,6 +28,7 @@ namespace MiChamba.Controllers
             }
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
+            ViewBag.postulaciones = PostulacionesUsuario();
 
             return View();
         }
@@ -201,21 +202,20 @@ namespace MiChamba.Controllers
 
         // HELPERS
         #region POSTULACIONS DEL USUARIO
-        public List<object> PostulacionesUsuario()
+        public List<PostulacionViewModel> PostulacionesUsuario()
         {
             int idUsuario = int.Parse(HttpContext.Session.GetString("id_usuario"));
 
             var MisPostulaciones = (
-                                                    from postulacion in _db.Postulaciones
-                                                    join oferta in _db.Ofertas  on postulacion.IdOferta equals oferta.IdOferta
-                                                    where postulacion.IdUsuario == idUsuario
-                                                    select new
-                                                    {
-                                                        titulo = oferta.Titulo,
-                                                        descripcion = oferta.Descripcion,
-                                                        estado = postulacion.EstadoPostulacion
-                                                    }
-                                                ).DefaultIfEmpty().ToList<object>();
+                                    from postulacion in _db.Postulaciones
+                                    join oferta in _db.Ofertas  on postulacion.IdOferta equals oferta.IdOferta
+                                    where postulacion.IdUsuario == idUsuario
+                                    select new PostulacionViewModel
+                                    {
+                                        titulo = oferta.Titulo,
+                                        descripcion = oferta.Descripcion,
+                                        estado = postulacion.EstadoPostulacion
+                                    }).ToList();
 
 
             return MisPostulaciones;
