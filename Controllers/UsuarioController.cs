@@ -3,6 +3,7 @@ using MiChamba.Models;
 using MiChamba.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
 
@@ -175,7 +176,15 @@ namespace MiChamba.Controllers
                 return RedirectToAction("Index");
             }
 
+            int idUsuario = int.Parse(HttpContext.Session.GetString("id_usuario"));
+
+            Curriculum? curriculumExistente = (from c in _db.Curriculums
+                                               where c.IdUsuario == idUsuario
+                                               select c).FirstOrDefault();
+
             ViewBag.foto = HttpContext.Session.GetString("foto");
+            ViewBag.curriculum = curriculumExistente;
+
             return View();
         }
         #endregion
@@ -197,8 +206,6 @@ namespace MiChamba.Controllers
             return View(usuario);
         }
         #endregion
-
-
 
         #region REGISTRO - POST
         [HttpPost]
@@ -250,12 +257,11 @@ namespace MiChamba.Controllers
             }
 
 
-
             return RedirectToAction("Index", "Usuario");
         }
         #endregion
 
-
+        #region POSTULACIONES - GET
         public IActionResult Postulaciones() {
 
             if (!VerifyUserLogin())
@@ -268,6 +274,62 @@ namespace MiChamba.Controllers
 
             return View();
         }
+        #endregion
+
+        #region SUBIR CV
+        [HttpPost]
+        public IActionResult RegistrarCV(Curriculum cv)
+        {
+            int idUsuario = int.Parse(HttpContext.Session.GetString("id_usuario"));
+
+            cv.IdUsuario = idUsuario ;
+
+            if (cv.PdfFile != null && cv.PdfFile.Length > 0)
+            {
+                try
+                {
+                    // Generar un nombre único para el archivo PDF
+                    string nombreArchivo = cv.IdUsuario + "-" + HttpContext.Session.GetString("nombre_usuario") + ".pdf";
+
+                    // Construir la ruta de destino
+                    string rutaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" , "uploads", "pdf", nombreArchivo);
+
+                    // Guardar el archivo en la ubicación especificada
+                    using (var stream = new FileStream(rutaDestino, FileMode.Create))
+                    {
+                        cv.PdfFile.CopyTo(stream);
+                    }
+
+                    cv.NombreArchivo = nombreArchivo;
+
+                    Curriculum? curriculumExistente = (from c in _db.Curriculums
+                                                       where c.IdUsuario == idUsuario
+                                                       select c ).FirstOrDefault();
+
+                    if (curriculumExistente == null)
+                    {
+                        _db.Curriculums.Add(cv);
+                        _db.SaveChanges();
+
+                        return RedirectToAction("Index", "Usuario");
+                    }
+
+                    _db.Update(cv);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index", "Usuario");
+                }
+                catch (Exception ex)
+                {
+                    // Manejar cualquier error
+                    ViewBag.Error = "Ocurrió un error al subir el archivo: " + ex.Message;
+                }
+            }
+
+
+            return RedirectToAction("Ajustes");
+        }
+        #endregion
 
         // HELPERS
         #region POSTULACIONS DEL USUARIO
