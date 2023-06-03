@@ -164,9 +164,6 @@ namespace MiChamba.Controllers
 
             Empresa emprasario = _db.Empresas.FirstOrDefault(u => u.IdEmpresa == id);
 
-            ViewBag.Vpais = emprasario.Estado;
-            ViewBag.Vestado = emprasario.Departamento;
-
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
 
@@ -176,7 +173,7 @@ namespace MiChamba.Controllers
 
         #region MofificacionPerfil - POST
         [HttpPost]
-        public IActionResult ModificacionPerfil(Empresa emprasario)
+        public IActionResult ModificacionEmpresa(Empresa emprasario)
         {
 
             // Guardar la imagen en el servidor
@@ -208,8 +205,6 @@ namespace MiChamba.Controllers
                 usuarioExistente.Descripcion = emprasario.Descripcion;
                 usuarioExistente.Direccion = emprasario.Direccion;
                 usuarioExistente.Email = emprasario.Email;
-                usuarioExistente.Estado = emprasario.Estado;
-                usuarioExistente.Departamento = emprasario.Departamento;
                 usuarioExistente.Imagen = emprasario.Imagen;
                 usuarioExistente.Password = emprasario.Password;
                 usuarioExistente.Telefono = emprasario.Telefono;
