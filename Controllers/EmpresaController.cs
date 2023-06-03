@@ -21,6 +21,8 @@ namespace MiChamba.Controllers
         #region INDEX - GET 
         public IActionResult Index()
         {
+
+           
             if (!VerifyEmpresaLogin())
             {
                 return RedirectToAction("Login");
@@ -141,10 +143,12 @@ namespace MiChamba.Controllers
         #region ADMINISTRAR POSTULACIONES
         public IActionResult AdministrarPostulaciones()
         {
-            if (VerifyEmpresaLogin())
+            if (!VerifyEmpresaLogin())
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("AdministrarPostulaciones");
             }
+
+            ViewBag.postulaciones = ListarPostulaciones();
 
             return View();
         }
@@ -171,5 +175,35 @@ namespace MiChamba.Controllers
             return ofertas;
         }
         #endregion
+
+        public List<PostulacionUserViewModel> ListarPostulaciones()
+        {
+            var idEmpresa = int.Parse(HttpContext.Session.GetString("id_empresa"));
+
+            List<PostulacionUserViewModel> postulaciones = (
+                from pt in _db.Postulaciones
+                join oft in _db.Ofertas on pt.IdOferta equals oft.IdOferta into oftGroup
+                from oft in oftGroup.DefaultIfEmpty()
+                join us in _db.Usuarios on pt.IdUsuario equals us.IdUsuario into usGroup
+                from us in usGroup.DefaultIfEmpty()
+                join cu in _db.Curriculums on pt.IdUsuario equals cu.IdUsuario into cuGroup
+                from cu in cuGroup.DefaultIfEmpty()
+                join ep in _db.Empresas on oft.IdEmpresa equals ep.IdEmpresa into epGroup
+                from ep in epGroup.DefaultIfEmpty()
+                where oft.IdEmpresa == idEmpresa
+                select new PostulacionUserViewModel
+                {
+                    nombre = us.Nombre,
+                    apellido = us.Apellido,
+                    estado_postulacion = pt.EstadoPostulacion,
+                    curriculum = cu.NombreArchivo
+                }
+            ).ToList();
+
+            return postulaciones;
+        }
+
+
+
     }
 }

@@ -1,68 +1,55 @@
-﻿@{
+﻿@using MiChamba.Models;
+@using MiChamba.ViewModel;
+
+@{
     Layout = "~/Views/Shared/_EmpresaLayout.cshtml";
+
+    List<PostulacionUserViewModel>  postulaciones = ViewBag.postulaciones;
 }
 
-<style>
-
-    .container {
-        padding: 30px;
-        border-radius: 15px;
-        width: 100%;
-        max-width: 900px;
-        min-width: 600px;
-    }
-
-    .text-infort {
-        margin-bottom: 20px;
-        color: black !important;
-    }
-
-    form {
-        color: white;
-    }
-
-    input {
-        background-color: white;
-    }
-
-    .button {
-        padding-top: 20px;
-    }
-
-</style>
-<div class="container">
-
-    <div class="text-infort">
-        <h1 style="color: black; background-color:white">Agregar oferta</h1>
-    </div>
-    <div class="bg-dark container">
-        <form method="post" action="">
-            <div class="form-group col-sm-12 mb-3">
-                <label for="tituloTrabajo" class="form-label">Titulo del trabajo</label>
-                <input type="email" class="form-control" id="tituloTrabajo" style="color: black; background:white !important;" required>   
-            </div>
-
-            <div class="form-group col-sm-12 mb-3">
-                <label for="educacion" class="form-label">Educación</label>
-                <input type="text" class="form-control" id="educacion" name="Educacion" style="color: black; background:white !important;" required>
-            </div>
-            <div class="form-group col-sm-12 mb-3">
-                <label for="experiencia-educacion" class="form-label">Experiencia:</label>
-                <input type="text" class="form-control" id="experiencia-educacion" name="ExperienciaEducacion" style="color: black; background:white !important;" required>
-            </div>
-            <div class="form-group col-sm-12 mb-3">
-                <label for="habilidades-educacion" class="form-label">Habilidades:</label>
-                <input type="text" class="form-control" id="habilidades-educacion" name="HabilidadesEducacion" style="color: black; background:white !important;" required>
-            </div>
-
-            <div class="form-group col-sm-12 mb-3">
-                <label for="conocimientos" class="form-label">Conocimientos:</label>
-                <input type="text" class="form-control" id="conocimientos" name="Conocimientos" style="color: black; background:white !important;" required>
-            </div>
-
-            <div class="button d-grid gap-2 col-2 mx-auto mt-3">
-                <button class="btn btn-primary" type="submit">Publicar</button>
-            </div>
-        </form>
-    </div>
+<div class="container mt-3">
+    <table class="table">
+            @if (postulaciones.Count > 0)
+            {
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Estado de Postulación</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (PostulacionUserViewModel postulacion in postulaciones)
+                {
+                    <tr>
+                        <td>@postulacion.nombre</td>
+                        <td>@postulacion.apellido</td>
+                        <td>@postulacion.estado_postulacion</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </button>
+                           
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No hay datos disponibles.</td>
+                </tr>
+            }
+    </table>
 </div>
