@@ -29,6 +29,7 @@ namespace MiChamba.Controllers
             }
 
             ViewBag.foto = HttpContext.Session.GetString("foto");
+            ViewBag.ofertas = ListarOfertas();
 
             return View();
         }
@@ -358,7 +359,26 @@ namespace MiChamba.Controllers
 
 
 
+        #region LISTAR OFERTAS CREADAS
+        public List<OfertaViewModel> ListarOfertas()
+        {
+            var idEmpresa = int.Parse(HttpContext.Session.GetString("id_empresa"));
 
+            var listarOfertas = (from oferta in _db.Ofertas
+                                 where oferta.IdEmpresa == idEmpresa
+                                 select new OfertaViewModel
+                                 {
+                                     IdOferta = oferta.IdOferta,
+                                     Titulo = oferta.Titulo,
+                                     Descripcion = oferta.Descripcion.PadRight(10),
+                                     FechaPublicada = ObtenerTiempoPublicacion(oferta.FechaPublicacion),
+                                     Ciudad = oferta.Ubicacion,
+                                     Requisitos = JObject.Parse(oferta.Requisitos.Replace("'", "\"")),
+                                 }).ToList();
+
+            return listarOfertas;
+        }
+        #endregion
 
     }
 }
