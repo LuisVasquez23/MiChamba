@@ -320,15 +320,43 @@ namespace MiChamba.Controllers
                 where oft.IdEmpresa == idEmpresa
                 select new PostulacionUserViewModel
                 {
+                    IdPostulacion = pt.IdPostulacion,
                     nombre = us.Nombre,
                     apellido = us.Apellido,
                     estado_postulacion = pt.EstadoPostulacion,
                     curriculum = cu.NombreArchivo
                 }
-            ).ToList();
+            ).Distinct().ToList();
 
             return postulaciones;
         }
+
+        [HttpPost]
+        public IActionResult ActualizarPostulacion(int id, string estado)
+        {
+           
+            var postulacion = _db.Postulaciones.Where(p => p.IdPostulacion == id).FirstOrDefault();
+
+
+
+            if (postulacion != null)
+            {
+                // Actualizas el estado de la postulación
+                postulacion.EstadoPostulacion = estado;
+
+                // Guardas los cambios en la base de datos
+                _db.Postulaciones.Update(postulacion);
+                _db.SaveChanges();
+
+                // Retornar una respuesta adecuada, por ejemplo, redirigir a la página de administración de postulaciones
+                return RedirectToAction("AdministrarPostulaciones");
+            }
+
+            // Si no se encuentra la postulación, puedes retornar una vista de error o realizar otra acción apropiada
+            return RedirectToAction("Error");
+        }
+
+
 
 
 
