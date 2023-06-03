@@ -23,6 +23,10 @@ namespace MiChamba.Controllers
         {
             ViewBag.ofertas = ListarOfertas();
             ViewBag.recursos = ListarRecursos();
+            ViewBag.totalOfertas = ObtenerTotalOfertas(); // Obtener el total de ofertas
+            ViewBag.totalEmpresas = ObtenerTotalEmpresas(); // Obtener el total de empresas
+            ViewBag.totalUsuarios = ObtenerTotalUsuarios(); // Obtener el total de usuarios
+
 
 
             return View();
@@ -143,30 +147,31 @@ namespace MiChamba.Controllers
         }
         #endregion
 
-        #region OBTENER EL TIEMPO DE  PUBLICACION
-        public static string ObtenerTiempoPublicacion(DateTime fechaPublicacion)
-        {
-            TimeSpan tiempoTranscurrido = DateTime.Now - fechaPublicacion;
 
-            if (tiempoTranscurrido.TotalMinutes < 60)
-            {
-                return $"Hace {tiempoTranscurrido.TotalMinutes:N0} minutos";
-            }
-            else if (tiempoTranscurrido.TotalHours < 24)
-            {
-                return $"Hace {tiempoTranscurrido.TotalHours:N0} horas";
-            }
-            else if (tiempoTranscurrido.TotalDays < 30)
-            {
-                return $"Hace {tiempoTranscurrido.TotalDays:N0} días";
-            }
-            else
-            {
-                int mesesTranscurridos = (int)(tiempoTranscurrido.TotalDays / 30);
-                return (mesesTranscurridos <= 1) ? $"Hace {mesesTranscurridos:N0} mes" : $"Hace {mesesTranscurridos:N0} meses";
-            }
+        #region OBTENER TOTAL DE OFERTAS
+        public int ObtenerTotalOfertas()
+        {
+            int totalOfertas = _db.Ofertas.Count();
+            return totalOfertas;
         }
         #endregion
 
+        #region OBTENER TOTAL DE EMPRESAS
+        public int ObtenerTotalEmpresas()
+        {
+            int totalEmpresas = _db.Empresas.Count();
+            return totalEmpresas;
+        }
+        #endregion
+
+        #region OBTENER TOTAL DE USUARIOS
+        public int ObtenerTotalUsuarios()
+        {
+            int totalUsuarios = _db.Usuarios.Count();
+            return totalUsuarios;
+        }
+        #endregion 
+
     }
+
 }

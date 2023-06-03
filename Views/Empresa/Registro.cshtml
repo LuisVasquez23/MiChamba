@@ -1,0 +1,96 @@
+﻿@using MiChamba.Models
+
+@{
+    ViewData["Title"] = "Registrarse";
+}
+<!-- Inicio Registro -->
+
+<div class="bg-dark p-4 w-100 h-100 position-absolute bg-white" id="login-container">
+    <div class="container w-75 d-flex justify-content-center align-items-center">
+        <form asp-controller="Empresa" asp-action="Registro" enctype="multipart/form-data" method="post" id="registro-form" class="login-form w-75">
+            <h2>Registro</h2>
+            <hr />
+            <div class="row">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Nombres -->
+                <div class="col-md-6 mt-md-2">
+                    <label for="nombres">Nombres: </label>
+                    <input type="text" class="form-control" name="Nombre" id="nombres" />
+                </div>
+
+                <!-- Apellidos -->
+                <div class="col-md-6 mt-md-2">
+                    <label for="descripcion" >Descripción: </label>
+                    <textarea name="Descripcion" class="form-control">
+
+                    </textarea>
+                </div>
+
+                <!-- Pais -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="pais">Pais: </label>
+                        <select id="pais" name="Pais" class="form-control">
+                        </select>
+                    </fieldset>
+                </div>
+
+                <!-- Departamento -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="departamento">Departamento: </label>
+                        <select id="departamento" name="Estado" class="form-control">
+                            <option>Selecciona un departamento...</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+                <!-- Correo -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="email" >Correo: </label>
+                        <input type="email" class="form-control" name="Email" id="email" />
+                    </fieldset>
+                </div>
+
+                <!-- Password -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="password">Password: </label>
+                        <input type="password"class="form-control" name="Password" id="password" />
+                    </fieldset>
+                </div>
+
+                <!-- Telefono -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="telefono">Telefono: </label>
+                        <input type="text" class="form-control" name="Telefono" id="telefono" />
+                    </fieldset>
+                </div>
+
+                <!-- Foto de perfil -->
+                <div class="col-md-6">
+                    <fieldset class="mt-md-2">
+                        <label for="foto_perfil">Foto: </label>
+                        <input type="file" class="form-control" name="ImagenFile" id="foto_perfil" />
+                    </fieldset>
+                </div>
+
+                <!-- Btn Registro -->
+                <div class="col-md-6 offset-md-6 mt-2">
+                    <fieldset class="mt-md-2">
+                        <input type="submit" class="btn btn-login text-white w-100" name="Registrar" value="Registrarse" />
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Ajax.js"></script>
+    <script src="~/js/Registro.js"></script>
+}

@@ -1,0 +1,48 @@
+﻿@using MiChamba.ViewModel;
+
+@{
+    Layout = "~/Views/Shared/_UsuarioLayout.cshtml";
+
+    List<PostulacionViewModel> postulaciones = ViewBag.postulaciones;
+}
+
+
+<div>
+    <div class="container-fluid bg-white rounded mb-5 " id="ofertas-section">
+
+        <div class="container d-flex align-items-center">
+            <div class="ultimas-ofertas mt-5">
+                @{
+
+                    if (postulaciones.Count > 0)
+                    {
+                        foreach (PostulacionViewModel postulacion in postulaciones)
+                        {
+                            <div class="card-oferta">
+                                <div class="card-oferta-title bg-dark text-white p-2 fs-4">
+                                    @postulacion.GetType().GetProperty("titulo")?.GetValue(postulacion)?.ToString()
+                                </div>
+                                <div class="card-oferta-description">
+                                    @postulacion.GetType().GetProperty("descripcion")?.GetValue(postulacion)?.ToString()
+                                </div>
+                                <div class="card-oferta-moreinfo">
+                                    <span class="text-muted">
+                                        @postulacion.GetType().GetProperty("estado")?.GetValue(postulacion)?.ToString()
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h3 class="h4 text-muted">No tienes postulaciones</h3>
+                    }
+
+                    
+                   
+                }
+            </div>
+        </div>
+</div>
+
+

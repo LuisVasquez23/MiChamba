@@ -120,6 +120,11 @@ namespace MiChamba.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NOMBRE");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PASSWORD");
+
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -253,10 +258,12 @@ namespace MiChamba.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Apellido")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("APELLIDO");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("EMAIL");
 

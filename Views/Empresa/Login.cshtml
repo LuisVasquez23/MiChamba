@@ -1,33 +1,31 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LoginLayout.cshtml";
-    ViewData["Title"] = "Iniciar sesion";
+    Layout = "~/Views/Shared/_LoginEmpresaLayout.cshtml";
+    ViewData["Title"] = "Iniciar sesion - Empresa";
 }
 
 <!-- LOGIN -->
 <!-- Formulario con metodo post -->
 <div class="bg-dark p-4 w-100 position-absolute h-100 bg-white" id="login-container">
     <div class="container w-50 d-flex justify-content-center align-items-center">
-        <form method="post" action="" id="login-form" class="login-form">
+        <form method="post" asp-action="Login" id="login-form" class="login-form">
             <h2>Iniciar sesion</h2>
             <fieldset class="mt-md-2">
                 <label for="email">Correo: </label>
-                <input type="email" class="form-control" name="Email" id="email"  />
+                <input type="email" class="form-control" name="Email" id="email" />
             </fieldset>
 
             <fieldset class="mt-md-2">
                 <label for="password">Contraseña: </label>
                 <input type="password" class="form-control" name="Password" id="password" />
-            </fieldsetc>
+            </fieldset>
 
-            <div class="mt-4">
-                <input type="submit" class="btn btn-login text-white w-100 mb-3" name="login-btn" value="Iniciar Sesion" />
-                <p class="fw-light text-center">
-                    <a asp-action="Login" asp-controller="Empresa" class="fw-bold text-center link-primary">Ingresar como empresa</a>
-                    <br />ó<br />
+                <div class="mt-4">
+                    <input type="submit" class="btn btn-login text-white w-100 mb-3" name="login-btn" value="Iniciar Sesion" />
+                    <p class="fw-light text-center">
                         ¿No tienes cuenta? ,  <a asp-action="Registro" class="fw-bold link-primary">Registrarse</a>
-                </p>
+                    </p>
 
-            </div>
+                </div>
         </form>
     </div>
 </div>
