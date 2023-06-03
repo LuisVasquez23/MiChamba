@@ -25,6 +25,20 @@ namespace MiChamba.Controllers
             return true;
         }
 
+        public bool VerifyEmpresaLogin()
+        {
+            var idUsuario = HttpContext.Session.GetString("id_empresa") ?? "";
+
+            if (idUsuario == "")
+            {
+                return false;
+            }
+
+            TempData["nombre_empresa"] = HttpContext.Session.GetString("nombre_empresa");
+
+            return true;
+        }
+
         #region OBTENER EL TIEMPO DE  PUBLICACION
         public static string ObtenerTiempoPublicacion(DateTime fechaPublicacion)
         {

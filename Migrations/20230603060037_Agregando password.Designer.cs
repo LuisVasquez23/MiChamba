@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiChamba.Migrations
 {
     [DbContext(typeof(MiChambaDbContext))]
-    [Migration("20230601040542_Agregando curriculum")]
-    partial class Agregandocurriculum
+    [Migration("20230603060037_Agregando password")]
+    partial class Agregandopassword
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,11 @@ namespace MiChamba.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NOMBRE");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PASSWORD");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
@@ -256,10 +261,12 @@ namespace MiChamba.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Apellido")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("APELLIDO");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("EMAIL");
 
